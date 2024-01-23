@@ -1,7 +1,7 @@
+import { hash } from 'bcrypt'
+import { makeUser } from 'test/factories/make-user'
 import { InMemoryUsersRepository } from 'test/respositories/in-memory-users-repository'
 import { AuthenticateUseCase } from './authenticate'
-import { hash } from 'bcrypt'
-import { randomUUID } from 'node:crypto'
 
 let inMemoryUsersRepository: InMemoryUsersRepository
 let sut: AuthenticateUseCase
@@ -12,16 +12,15 @@ describe('Authenticate Use Case', () => {
     sut = new AuthenticateUseCase(inMemoryUsersRepository)
   })
 
-  it('should be able to login an user', async () => {
-    const password = await hash('123456', 10)
+  it('should be able to authenticate user', async () => {
+    const hashedPassword = await hash('123456', 10)
 
-    inMemoryUsersRepository.items.push({
-      id: randomUUID(),
-      name: 'John',
-      lastName: 'Doe',
+    const newUser = makeUser({
       email: 'johndoe@example.com',
-      password,
+      password: hashedPassword,
     })
+
+    inMemoryUsersRepository.items.push(newUser)
 
     const { user } = await sut.execute({
       email: 'johndoe@example.com',
@@ -31,38 +30,35 @@ describe('Authenticate Use Case', () => {
     expect(inMemoryUsersRepository.items[0]).toEqual(user)
   })
 
-  it('should not be able to login with wrong email', async () => {
-    const password = await hash('123456', 10)
-
-    inMemoryUsersRepository.items.push({
-      id: randomUUID(),
-      name: 'John',
-      lastName: 'Doe',
+  it('should not be able to authenticate with wrong email', async () => {
+    const newUser = makeUser({
       email: 'johndoe@example.com',
-      password,
     })
+
+    inMemoryUsersRepository.items.push(newUser)
+
     await expect(() =>
       sut.execute({
-        email: 'wrongEmail@example.com',
+        email: 'wrong-email@example.com',
         password: '123456',
       }),
     ).rejects.toBeInstanceOf(Error)
   })
 
-  it('should not be able to login with wrong password', async () => {
-    const password = await hash('123456', 10)
+  it('should not be able to authenticate with wrong password', async () => {
+    const hashedPassword = await hash('123456', 10)
 
-    inMemoryUsersRepository.items.push({
-      id: randomUUID(),
-      name: 'John',
-      lastName: 'Doe',
+    const newUser = makeUser({
       email: 'johndoe@example.com',
-      password,
+      password: hashedPassword,
     })
+
+    inMemoryUsersRepository.items.push(newUser)
+
     await expect(() =>
       sut.execute({
         email: 'johndoe@example.com',
-        password: 'wrongPassword',
+        password: 'wrong-password',
       }),
     ).rejects.toBeInstanceOf(Error)
   })
