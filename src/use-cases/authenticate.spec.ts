@@ -1,6 +1,7 @@
 import { InMemoryUsersRepository } from 'test/respositories/in-memory-users-repository'
 import { AuthenticateUseCase } from './authenticate'
 import { hash } from 'bcrypt'
+import { randomUUID } from 'node:crypto'
 
 let inMemoryUsersRepository: InMemoryUsersRepository
 let sut: AuthenticateUseCase
@@ -15,6 +16,7 @@ describe('Authenticate Use Case', () => {
     const password = await hash('123456', 10)
 
     inMemoryUsersRepository.items.push({
+      id: randomUUID(),
       name: 'John',
       lastName: 'Doe',
       email: 'johndoe@example.com',
@@ -33,6 +35,7 @@ describe('Authenticate Use Case', () => {
     const password = await hash('123456', 10)
 
     inMemoryUsersRepository.items.push({
+      id: randomUUID(),
       name: 'John',
       lastName: 'Doe',
       email: 'johndoe@example.com',
@@ -50,6 +53,7 @@ describe('Authenticate Use Case', () => {
     const password = await hash('123456', 10)
 
     inMemoryUsersRepository.items.push({
+      id: randomUUID(),
       name: 'John',
       lastName: 'Doe',
       email: 'johndoe@example.com',
