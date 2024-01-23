@@ -1,4 +1,4 @@
-import { randomUUID } from 'node:crypto'
+import { makePortifolio } from 'test/factories/make-portifolio'
 import { InMemoryPortifoliosRepository } from 'test/respositories/in-memory-portifolios-repository'
 import { DeletePortifolioUseCase } from './delete-portifolio'
 
@@ -12,45 +12,24 @@ describe('Delete Portifolio Use Case', () => {
   })
 
   it('should be able to delete a portifolio', async () => {
-    const newPortifolio = await inMemoryPortifoliosRepository.create({
-      id: randomUUID(),
-      title: 'New Project',
-      description: 'Nice description here...',
-      tag: 'Back-end',
-      link: 'random-link',
-    })
+    const newPortifolio = makePortifolio()
+    const newPortifolio2 = makePortifolio()
 
-    await inMemoryPortifoliosRepository.create({
-      id: randomUUID(),
-      title: 'New Project',
-      description: 'Nice description here...',
-      tag: 'Back-end',
-      link: 'random-link',
-    })
+    await inMemoryPortifoliosRepository.create(newPortifolio)
+    await inMemoryPortifoliosRepository.create(newPortifolio2)
+
+    const portifolioId = newPortifolio.id.toString()
 
     await sut.execute({
-      id: newPortifolio.id,
+      id: portifolioId,
     })
 
     expect(inMemoryPortifoliosRepository.items).toHaveLength(1)
   })
 
   it('should not be able to delete non existing portifolio', async () => {
-    await inMemoryPortifoliosRepository.create({
-      id: randomUUID(),
-      title: 'New Project',
-      description: 'Nice description here...',
-      tag: 'Back-end',
-      link: 'random-link',
-    })
-
-    await inMemoryPortifoliosRepository.create({
-      id: randomUUID(),
-      title: 'New Project',
-      description: 'Nice description here...',
-      tag: 'Back-end',
-      link: 'random-link',
-    })
+    await inMemoryPortifoliosRepository.create(makePortifolio())
+    await inMemoryPortifoliosRepository.create(makePortifolio())
 
     await expect(() =>
       sut.execute({

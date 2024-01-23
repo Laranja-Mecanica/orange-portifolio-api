@@ -1,7 +1,7 @@
 import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 
-interface PortifolioProps {
+export interface PortifolioProps {
   title: string
   tag: string
   link: string
