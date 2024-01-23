@@ -1,4 +1,7 @@
-import { User, UsersRepository } from '@/repositories/users-repository'
+import {
+  User,
+  UsersRepository,
+} from '@/domain/application/repositories/users-repository'
 import { hash } from 'bcrypt'
 import { randomUUID } from 'node:crypto'
 

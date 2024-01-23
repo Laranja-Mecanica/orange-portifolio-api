@@ -1,7 +1,7 @@
 import {
   Portifolio,
   PortifoliosRepository,
-} from '@/repositories/portifolios-repository'
+} from '@/domain/application/repositories/portifolios-repository'
 import { randomUUID } from 'node:crypto'
 
 interface CreatePortifolioUseCaseRequest {

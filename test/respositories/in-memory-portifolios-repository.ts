@@ -1,7 +1,7 @@
 import {
   Portifolio,
   PortifoliosRepository,
-} from '@/repositories/portifolios-repository'
+} from '@/domain/application/repositories/portifolios-repository'
 
 export class InMemoryPortifoliosRepository implements PortifoliosRepository {
   public items: Portifolio[] = []
