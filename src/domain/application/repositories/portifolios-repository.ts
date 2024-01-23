@@ -1,10 +1,4 @@
-export interface Portifolio {
-  id: string
-  title: string
-  tag: string
-  link: string
-  description: string
-}
+import { Portifolio } from '@/domain/entities/portifolio'
 
 export interface PortifoliosRepository {
   findById(id: string): Promise<Portifolio | null>
