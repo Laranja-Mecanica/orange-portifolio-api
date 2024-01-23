@@ -1,6 +1,6 @@
 import {
   Portifolio,
-  PotifoliosRepository,
+  PortifoliosRepository,
 } from '@/repositories/portifolios-repository'
 import { randomUUID } from 'node:crypto'
 
@@ -16,7 +16,7 @@ interface CreatePortifolioUseCaseReponse {
 }
 
 export class CreatePortifolioUseCase {
-  constructor(private portifoliosRepository: PotifoliosRepository) {}
+  constructor(private portifoliosRepository: PortifoliosRepository) {}
 
   async execute({
     title,

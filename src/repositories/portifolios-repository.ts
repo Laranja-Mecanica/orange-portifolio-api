@@ -6,6 +6,8 @@ export interface Portifolio {
   description: string
 }
 
-export interface PotifoliosRepository {
+export interface PortifoliosRepository {
+  findById(id: string): Promise<Portifolio | null>
   create(portifolio: Portifolio): Promise<Portifolio>
+  save(portifolio: Portifolio): Promise<Portifolio>
 }
