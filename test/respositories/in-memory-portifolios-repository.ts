@@ -29,4 +29,10 @@ export class InMemoryPortifoliosRepository implements PortifoliosRepository {
 
     return portifolio
   }
+
+  async delete(id: string) {
+    const itemIndex = this.items.findIndex((item) => item.id === id)
+
+    this.items.splice(itemIndex, 1)
+  }
 }
