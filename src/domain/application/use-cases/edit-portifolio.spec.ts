@@ -1,4 +1,4 @@
-import { randomUUID } from 'node:crypto'
+import { makePortifolio } from 'test/factories/make-portifolio'
 import { InMemoryPortifoliosRepository } from 'test/respositories/in-memory-portifolios-repository'
 import { EditPortifolioUseCase } from './edit-portifolio'
 
@@ -12,16 +12,14 @@ describe('Edit Portifolio Use Case', () => {
   })
 
   it('should be able to edit a portifolio', async () => {
-    const newPortifolio = await inMemoryPortifoliosRepository.create({
-      id: randomUUID(),
-      title: 'New Project',
-      description: 'Nice description here...',
-      tag: 'Back-end',
-      link: 'random-link',
-    })
+    const portifolio = makePortifolio()
+
+    await inMemoryPortifoliosRepository.create(portifolio)
+
+    const portifolioId = portifolio.id.toString()
 
     await sut.execute({
-      portifolioId: newPortifolio.id,
+      portifolioId,
       title: 'Updated title',
       description: 'Updated description',
       tag: 'Node.js',
