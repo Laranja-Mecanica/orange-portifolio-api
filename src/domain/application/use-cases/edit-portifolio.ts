@@ -1,3 +1,5 @@
+import { Either, left, right } from '@/core/either'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { PortifoliosRepository } from '@/domain/application/repositories/portifolios-repository'
 
 interface EditPortifolioUseCaseRequest {
@@ -8,7 +10,7 @@ interface EditPortifolioUseCaseRequest {
   tag: string
 }
 
-interface EditPortifolioUseCaseResponse {}
+type EditPortifolioUseCaseResponse = Either<ResourceNotFoundError, null>
 
 export class EditPortifolioUseCase {
   constructor(private portifoliosRepository: PortifoliosRepository) {}
@@ -23,7 +25,7 @@ export class EditPortifolioUseCase {
     const portifolio = await this.portifoliosRepository.findById(portifolioId)
 
     if (!portifolio) {
-      throw new Error('Resource not found.')
+      return left(new ResourceNotFoundError())
     }
 
     portifolio.title = title
@@ -33,6 +35,6 @@ export class EditPortifolioUseCase {
 
     await this.portifoliosRepository.save(portifolio)
 
-    return {}
+    return right(null)
   }
 }
