@@ -18,7 +18,7 @@ describe('Edit Portifolio Use Case', () => {
 
     const portifolioId = portifolio.id.toString()
 
-    await sut.execute({
+    const result = await sut.execute({
       portifolioId,
       title: 'Updated title',
       description: 'Updated description',
@@ -26,6 +26,7 @@ describe('Edit Portifolio Use Case', () => {
       link: 'random-link',
     })
 
+    expect(result.isRight()).toBe(true)
     expect(inMemoryPortifoliosRepository.items[0].title).toBe('Updated title')
     expect(inMemoryPortifoliosRepository.items[0].description).toBe(
       'Updated description',
