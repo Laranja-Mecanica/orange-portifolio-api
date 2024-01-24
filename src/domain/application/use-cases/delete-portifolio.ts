@@ -1,10 +1,12 @@
+import { Either, left, right } from '@/core/either'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { PortifoliosRepository } from '@/domain/application/repositories/portifolios-repository'
 
 interface DeletePortifolioUseCaseRequest {
   id: string
 }
 
-interface DeletePortifolioUseCaseReponse {}
+type DeletePortifolioUseCaseReponse = Either<ResourceNotFoundError, null>
 
 export class DeletePortifolioUseCase {
   constructor(private portifoliosRepository: PortifoliosRepository) {}
@@ -15,11 +17,11 @@ export class DeletePortifolioUseCase {
     const hasPortifolio = await this.portifoliosRepository.findById(id)
 
     if (!hasPortifolio) {
-      throw new Error('Resource not found.')
+      return left(new ResourceNotFoundError())
     }
 
     await this.portifoliosRepository.delete(id)
 
-    return {}
+    return right(null)
   }
 }

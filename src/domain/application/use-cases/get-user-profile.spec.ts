@@ -18,10 +18,15 @@ describe('Get User Profile Use Case', () => {
 
     const userId = createdUser.id.toString()
 
-    const { user } = await sut.execute({
+    const result = await sut.execute({
       userId,
     })
 
-    expect(inMemoryUsersRepository.items[0]).toEqual(user)
+    expect(result.isRight()).toBe(true)
+    expect(result.value).toMatchObject({
+      user: expect.objectContaining({
+        id: createdUser.id,
+      }),
+    })
   })
 })

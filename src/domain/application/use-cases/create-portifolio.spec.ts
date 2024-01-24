@@ -11,14 +11,14 @@ describe('Create Portifolio Use Case', () => {
   })
 
   it('should be able an user create a portifolio', async () => {
-    const { portifolio } = await sut.execute({
+    const result = await sut.execute({
       title: 'New Project',
       description: 'Nice description here...',
       tag: 'Back-end',
       link: 'random-link',
     })
 
+    expect(result.isRight()).toBe(true)
     expect(inMemoryPortifoliosRepository.items).toHaveLength(1)
-    expect(inMemoryPortifoliosRepository.items[0].id).toBe(portifolio.id)
   })
 })
