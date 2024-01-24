@@ -1,17 +1,20 @@
-import {
-  User,
-  UsersRepository,
-} from '@/domain/application/repositories/users-repository'
+import { Either, left, right } from '@/core/either'
+import { UsersRepository } from '@/domain/application/repositories/users-repository'
+import { User } from '@/domain/entities/user'
 import { compare } from 'bcrypt'
+import { WrongCredentialsError } from './errors/wrong-credentials-error'
 
 interface AuthenticateUseCaseRequest {
   email: string
   password: string
 }
 
-interface AuthenticateUseCaseResponse {
-  user: User
-}
+type AuthenticateUseCaseResponse = Either<
+  WrongCredentialsError,
+  {
+    user: User
+  }
+>
 
 export class AuthenticateUseCase {
   constructor(private usersRepository: UsersRepository) {}
@@ -23,15 +26,15 @@ export class AuthenticateUseCase {
     const user = await this.usersRepository.findByEmail(email)
 
     if (!user) {
-      throw new Error('Email or password are incorrect')
+      return left(new WrongCredentialsError())
     }
 
     const isPasswordMatch = await compare(password, user.password)
 
     if (!isPasswordMatch) {
-      throw new Error('Email or password are incorrect')
+      return left(new WrongCredentialsError())
     }
 
-    return { user }
+    return right({ user })
   }
 }

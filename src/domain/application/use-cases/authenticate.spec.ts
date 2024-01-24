@@ -2,6 +2,7 @@ import { hash } from 'bcrypt'
 import { makeUser } from 'test/factories/make-user'
 import { InMemoryUsersRepository } from 'test/respositories/in-memory-users-repository'
 import { AuthenticateUseCase } from './authenticate'
+import { WrongCredentialsError } from './errors/wrong-credentials-error'
 
 let inMemoryUsersRepository: InMemoryUsersRepository
 let sut: AuthenticateUseCase
@@ -22,12 +23,13 @@ describe('Authenticate Use Case', () => {
 
     inMemoryUsersRepository.items.push(newUser)
 
-    const { user } = await sut.execute({
+    const result = await sut.execute({
       email: 'johndoe@example.com',
       password: '123456',
     })
 
-    expect(inMemoryUsersRepository.items[0]).toEqual(user)
+    expect(result.isRight()).toBe(true)
+    expect(inMemoryUsersRepository.items[0]).toEqual(newUser)
   })
 
   it('should not be able to authenticate with wrong email', async () => {
@@ -37,12 +39,13 @@ describe('Authenticate Use Case', () => {
 
     inMemoryUsersRepository.items.push(newUser)
 
-    await expect(() =>
-      sut.execute({
-        email: 'wrong-email@example.com',
-        password: '123456',
-      }),
-    ).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      email: 'wrong-email@example.com',
+      password: '123456',
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(WrongCredentialsError)
   })
 
   it('should not be able to authenticate with wrong password', async () => {
@@ -55,11 +58,12 @@ describe('Authenticate Use Case', () => {
 
     inMemoryUsersRepository.items.push(newUser)
 
-    await expect(() =>
-      sut.execute({
-        email: 'johndoe@example.com',
-        password: 'wrong-password',
-      }),
-    ).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      email: 'johndoe@example.com',
+      password: 'wrong-password',
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(WrongCredentialsError)
   })
 })
