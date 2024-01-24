@@ -1,3 +1,4 @@
+import { Either, right } from '@/core/either'
 import { PortifoliosRepository } from '@/domain/application/repositories/portifolios-repository'
 import { Portifolio } from '@/domain/entities/portifolio'
 
@@ -8,9 +9,12 @@ interface CreatePortifolioUseCaseRequest {
   description: string
 }
 
-interface CreatePortifolioUseCaseReponse {
-  portifolio: Portifolio
-}
+type CreatePortifolioUseCaseReponse = Either<
+  null,
+  {
+    portifolio: Portifolio
+  }
+>
 
 export class CreatePortifolioUseCase {
   constructor(private portifoliosRepository: PortifoliosRepository) {}
@@ -30,8 +34,8 @@ export class CreatePortifolioUseCase {
 
     await this.portifoliosRepository.create(portifolio)
 
-    return {
+    return right({
       portifolio,
-    }
+    })
   }
 }
