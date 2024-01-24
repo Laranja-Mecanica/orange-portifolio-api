@@ -1,3 +1,4 @@
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { makePortifolio } from 'test/factories/make-portifolio'
 import { InMemoryPortifoliosRepository } from 'test/respositories/in-memory-portifolios-repository'
 import { DeletePortifolioUseCase } from './delete-portifolio'
@@ -31,11 +32,12 @@ describe('Delete Portifolio Use Case', () => {
     await inMemoryPortifoliosRepository.create(makePortifolio())
     await inMemoryPortifoliosRepository.create(makePortifolio())
 
-    await expect(() =>
-      sut.execute({
-        id: 'wrongId',
-      }),
-    ).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      id: 'wrongId',
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError)
     expect(inMemoryPortifoliosRepository.items).toHaveLength(2)
   })
 })
