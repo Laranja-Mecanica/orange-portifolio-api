@@ -1,7 +1,7 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { UsersRepository } from '@/domain/application/repositories/users-repository'
 import { User } from '@/domain/entities/user'
-import { getPrisma } from '../lib/prisma/prisma'
+import { getPrisma } from '../prisma'
 
 const prisma = getPrisma()
 
