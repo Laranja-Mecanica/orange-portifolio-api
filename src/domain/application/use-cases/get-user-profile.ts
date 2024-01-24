@@ -1,4 +1,5 @@
-import { User, UsersRepository } from '@/repositories/users-repository'
+import { UsersRepository } from '@/domain/application/repositories/users-repository'
+import { User } from '@/domain/entities/user'
 
 interface GetUserProfileUseCaseRequest {
   userId: string

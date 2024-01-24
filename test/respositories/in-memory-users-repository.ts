@@ -1,10 +1,11 @@
-import { User, UsersRepository } from '@/repositories/users-repository'
+import { UsersRepository } from '@/domain/application/repositories/users-repository'
+import { User } from '@/domain/entities/user'
 
 export class InMemoryUsersRepository implements UsersRepository {
   public items: User[] = []
 
   async findById(id: string) {
-    const user = this.items.find((item) => item.id === id)
+    const user = this.items.find((item) => item.id.toString() === id)
 
     if (!user) {
       return null

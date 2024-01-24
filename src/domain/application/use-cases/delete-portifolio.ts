@@ -1,4 +1,4 @@
-import { PortifoliosRepository } from '@/repositories/portifolios-repository'
+import { PortifoliosRepository } from '@/domain/application/repositories/portifolios-repository'
 
 interface DeletePortifolioUseCaseRequest {
   id: string

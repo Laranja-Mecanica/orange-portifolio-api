@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@faker-js/faker": "8.3.1",
     "@rocketseat/eslint-config": "2.1.0",
     "@types/bcrypt": "5.0.2",
     "@types/express": "4.17.21",
@@ -24,11 +25,12 @@
     "tsup": "8.0.1",
     "tsx": "4.7.0",
     "typescript": "5.3.3",
+    "vite-tsconfig-paths": "4.3.1",
     "vitest": "1.2.1"
   },
   "dependencies": {
-    "bcrypt": "5.1.1",
     "@prisma/client": "5.8.1",
+    "bcrypt": "5.1.1",
     "dotenv": "16.3.2",
     "express": "4.18.2",
     "zod": "3.22.4"

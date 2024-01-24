@@ -1,8 +1,5 @@
-import {
-  Portifolio,
-  PortifoliosRepository,
-} from '@/repositories/portifolios-repository'
-import { randomUUID } from 'node:crypto'
+import { PortifoliosRepository } from '@/domain/application/repositories/portifolios-repository'
+import { Portifolio } from '@/domain/entities/portifolio'
 
 interface CreatePortifolioUseCaseRequest {
   title: string
@@ -24,13 +21,14 @@ export class CreatePortifolioUseCase {
     link,
     description,
   }: CreatePortifolioUseCaseRequest): Promise<CreatePortifolioUseCaseReponse> {
-    const portifolio = await this.portifoliosRepository.create({
-      id: randomUUID(),
+    const portifolio = Portifolio.create({
       title,
-      tag,
-      link,
       description,
+      link,
+      tag,
     })
+
+    await this.portifoliosRepository.create(portifolio)
 
     return {
       portifolio,

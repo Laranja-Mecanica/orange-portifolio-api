@@ -1,10 +1,4 @@
-export interface User {
-  id: string
-  name: string
-  lastName: string
-  email: string
-  password: string
-}
+import { User } from '@/domain/entities/user'
 
 export interface UsersRepository {
   findById(id: string): Promise<User | null>
