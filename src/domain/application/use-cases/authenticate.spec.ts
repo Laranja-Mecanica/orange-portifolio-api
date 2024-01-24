@@ -29,7 +29,11 @@ describe('Authenticate Use Case', () => {
     })
 
     expect(result.isRight()).toBe(true)
-    expect(inMemoryUsersRepository.items[0]).toEqual(newUser)
+    expect(result.value).toMatchObject({
+      user: expect.objectContaining({
+        id: newUser.id,
+      }),
+    })
   })
 
   it('should not be able to authenticate with wrong email', async () => {
