@@ -30,5 +30,7 @@ export const authenticate = async (req: Request, res: Response) => {
     }
   }
 
-  return res.status(200).json({ accessToken: result.value.token })
+  const { accessToken } = result.value
+
+  return res.status(200).json({ accessToken })
 }

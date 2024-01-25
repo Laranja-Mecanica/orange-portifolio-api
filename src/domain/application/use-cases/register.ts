@@ -1,7 +1,7 @@
 import { Either, left, right } from '@/core/either'
 import { UsersRepository } from '@/domain/application/repositories/users-repository'
 import { User } from '@/domain/entities/user'
-import { hash } from 'bcrypt'
+import { Hasher } from '../cryptography/hasher'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 
 interface RegisterUseCaseRequest {
@@ -19,7 +19,10 @@ type RegisterUseCaseResponse = Either<
 >
 
 export class RegisterUseCase {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(
+    private usersRepository: UsersRepository,
+    private hasher: Hasher,
+  ) {}
 
   async execute({
     name,
@@ -33,7 +36,7 @@ export class RegisterUseCase {
       return left(new UserAlreadyExistsError())
     }
 
-    const password_hash = await hash(password, 10)
+    const password_hash = await this.hasher.hash(password)
 
     const user = User.create({
       name,
