@@ -2,7 +2,7 @@ import { env } from '@/env'
 import { Application } from 'express'
 import http, { Server as HTTPServer } from 'http'
 import request from 'supertest'
-import { getPrisma } from '../lib/prisma/prisma'
+import { getPrisma } from '../prisma/prisma'
 
 let server: HTTPServer
 
