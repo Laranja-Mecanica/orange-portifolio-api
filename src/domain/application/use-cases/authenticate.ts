@@ -1,7 +1,8 @@
 import { Either, left, right } from '@/core/either'
 import { UsersRepository } from '@/domain/application/repositories/users-repository'
-import { User } from '@/domain/entities/user'
+import { env } from '@/env'
 import { compare } from 'bcrypt'
+import { sign } from 'jsonwebtoken'
 import { WrongCredentialsError } from './errors/wrong-credentials-error'
 
 interface AuthenticateUseCaseRequest {
@@ -12,7 +13,7 @@ interface AuthenticateUseCaseRequest {
 type AuthenticateUseCaseResponse = Either<
   WrongCredentialsError,
   {
-    user: User
+    token: string
   }
 >
 
@@ -35,6 +36,10 @@ export class AuthenticateUseCase {
       return left(new WrongCredentialsError())
     }
 
-    return right({ user })
+    const token = await sign({ sub: user.id.toString() }, env.JWT_PVK, {
+      expiresIn: '8h',
+    })
+
+    return right({ token })
   }
 }

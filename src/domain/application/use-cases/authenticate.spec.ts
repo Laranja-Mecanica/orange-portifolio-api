@@ -30,9 +30,7 @@ describe('Authenticate Use Case', () => {
 
     expect(result.isRight()).toBe(true)
     expect(result.value).toMatchObject({
-      user: expect.objectContaining({
-        id: newUser.id,
-      }),
+      token: expect.any(String),
     })
   })
 
