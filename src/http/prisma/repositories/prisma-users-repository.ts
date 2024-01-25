@@ -1,7 +1,7 @@
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { UsersRepository } from '@/domain/application/repositories/users-repository'
 import { User } from '@/domain/entities/user'
 import { getPrisma } from '../prisma'
+import { PrismaUserMapper } from './mappers/prisma-user-mapper'
 
 const prisma = getPrisma()
 
@@ -21,27 +21,11 @@ export class PrismaUsersRespository implements UsersRepository {
       return null
     }
 
-    const mapperUser = User.create(
-      {
-        name: user.name,
-        lastName: user.lastName,
-        email: user.email,
-        password: user.password,
-      },
-      new UniqueEntityID(user.id),
-    )
-
-    return mapperUser
+    return PrismaUserMapper.toDomain(user)
   }
 
   async create(user: User) {
-    const data = {
-      id: user.id.toString(),
-      name: user.name,
-      lastName: user.lastName,
-      email: user.email,
-      password: user.password,
-    }
+    const data = PrismaUserMapper.toPrisma(user)
 
     await prisma.user.create({
       data,
