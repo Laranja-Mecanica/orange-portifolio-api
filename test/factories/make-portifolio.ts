@@ -1,5 +1,7 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Portifolio, PortifolioProps } from '@/domain/entities/portifolio'
+import { getPrisma } from '@/http/prisma/prisma'
+import { PrismaPortifolioMapper } from '@/http/prisma/repositories/mappers/prisma-portifolio-mapper'
 import { faker } from '@faker-js/faker'
 
 export function makePortifolio(
@@ -16,6 +18,18 @@ export function makePortifolio(
     },
     id,
   )
+
+  return portifolio
+}
+
+export async function makePrismaPortifolio(data: Partial<Portifolio> = {}) {
+  const portifolio = makePortifolio(data)
+
+  const prisma = getPrisma()
+
+  await prisma.portifolio.create({
+    data: PrismaPortifolioMapper.toPrisma(portifolio),
+  })
 
   return portifolio
 }
