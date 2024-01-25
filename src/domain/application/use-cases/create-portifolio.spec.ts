@@ -15,7 +15,6 @@ describe('Create Portifolio Use Case', () => {
       userId: 'user-01',
       title: 'New Project',
       description: 'Nice description here...',
-      tag: 'Back-end',
       link: 'random-link',
     })
 

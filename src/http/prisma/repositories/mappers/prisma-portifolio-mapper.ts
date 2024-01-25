@@ -10,7 +10,6 @@ export class PrismaPortifolioMapper {
         title: raw.title,
         description: raw.description,
         link: raw.link,
-        tag: 'not-implemented-yet',
         createdAt: raw.createdAt,
       },
       new UniqueEntityID(raw.id),

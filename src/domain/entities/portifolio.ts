@@ -5,7 +5,6 @@ import { Optional } from '@/core/types/optional'
 export interface PortifolioProps {
   userId: UniqueEntityID
   title: string
-  tag: string
   link: string
   description: string
   createdAt: Date
@@ -22,14 +21,6 @@ export class Portifolio extends Entity<PortifolioProps> {
 
   set title(title: string) {
     this.props.title = title
-  }
-
-  get tag() {
-    return this.props.tag
-  }
-
-  set tag(tag: string) {
-    this.props.tag = tag
   }
 
   get link() {

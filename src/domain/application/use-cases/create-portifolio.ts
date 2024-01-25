@@ -6,7 +6,6 @@ import { Portifolio } from '@/domain/entities/portifolio'
 interface CreatePortifolioUseCaseRequest {
   userId: string
   title: string
-  tag: string
   link: string
   description: string
 }
@@ -24,7 +23,6 @@ export class CreatePortifolioUseCase {
   async execute({
     userId,
     title,
-    tag,
     link,
     description,
   }: CreatePortifolioUseCaseRequest): Promise<CreatePortifolioUseCaseReponse> {
@@ -33,7 +31,6 @@ export class CreatePortifolioUseCase {
       title,
       description,
       link,
-      tag,
     })
 
     await this.portifoliosRepository.create(portifolio)
