@@ -8,6 +8,7 @@ export function makePortifolio(
 ) {
   const portifolio = Portifolio.create(
     {
+      userId: new UniqueEntityID(),
       title: faker.lorem.sentence(3),
       description: faker.lorem.sentence(8),
       link: faker.internet.url(),

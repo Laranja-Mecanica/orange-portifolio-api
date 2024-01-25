@@ -16,16 +16,12 @@ export class InMemoryPortifoliosRepository implements PortifoliosRepository {
 
   async create(portifolio: Portifolio) {
     this.items.push(portifolio)
-
-    return portifolio
   }
 
   async save(portifolio: Portifolio) {
     const itemIndex = this.items.findIndex((item) => item.id === portifolio.id)
 
     this.items[itemIndex] = portifolio
-
-    return portifolio
   }
 
   async delete(id: string) {
