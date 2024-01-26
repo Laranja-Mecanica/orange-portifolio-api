@@ -7,7 +7,6 @@ interface EditPortifolioUseCaseRequest {
   title: string
   description: string
   link: string
-  tag: string
 }
 
 type EditPortifolioUseCaseResponse = Either<ResourceNotFoundError, null>
@@ -20,7 +19,6 @@ export class EditPortifolioUseCase {
     title,
     description,
     link,
-    tag,
   }: EditPortifolioUseCaseRequest): Promise<EditPortifolioUseCaseResponse> {
     const portifolio = await this.portifoliosRepository.findById(portifolioId)
 
@@ -31,7 +29,6 @@ export class EditPortifolioUseCase {
     portifolio.title = title
     portifolio.description = description
     portifolio.link = link
-    portifolio.tag = tag
 
     await this.portifoliosRepository.save(portifolio)
 
