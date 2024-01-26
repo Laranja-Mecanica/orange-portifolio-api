@@ -1,20 +1,21 @@
 import { makeCreatePortifolioUseCase } from '@/domain/application/use-cases/factories/make-create-portifolio-use-case'
-import { Request, Response } from 'express'
+import { customRequest } from '@/http/midllewares/authenticate'
+import { Response } from 'express'
 import { z } from 'zod'
 
-export const createPortifolio = async (req: Request, res: Response) => {
+export const createPortifolio = async (req: customRequest, res: Response) => {
   const createPortifolioBodySchema = z.object({
-    userId: z.string(),
     title: z.string(),
     description: z.string(),
     link: z.string(),
   })
 
-  const { userId, title, description, link } = createPortifolioBodySchema.parse(
+  const { title, description, link } = createPortifolioBodySchema.parse(
     req.body,
   )
 
   const createPortifolioUseCase = makeCreatePortifolioUseCase()
+  const userId = req.userId
 
   const result = await createPortifolioUseCase.execute({
     userId,

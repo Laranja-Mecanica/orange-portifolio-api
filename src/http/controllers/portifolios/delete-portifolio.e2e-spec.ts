@@ -1,6 +1,7 @@
 import { getPrisma } from '@/http/prisma/prisma'
 import { Server, createServer } from 'http'
 import request from 'supertest'
+import { makeAuthentication } from 'test/factories/make-authentication'
 import { makePrismaPortifolio } from 'test/factories/make-portifolio'
 import { makePrismaUser } from 'test/factories/make-user'
 
@@ -18,6 +19,7 @@ describe('Delete Portifolio (E2E)', () => {
 
   test('[DELETE] /portifolios/:id', async () => {
     const user = await makePrismaUser()
+    const token = makeAuthentication(user.id.toString())
 
     const portifolio = await makePrismaPortifolio({
       userId: user.id,
@@ -27,7 +29,7 @@ describe('Delete Portifolio (E2E)', () => {
 
     const response = await request(server)
       .delete(`/portifolios/${portifolioId}`)
-      .send({})
+      .set('Authorization', `Bearer ${token}`)
 
     expect(response.statusCode).toBe(204)
 

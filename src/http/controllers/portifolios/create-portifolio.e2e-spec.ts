@@ -1,6 +1,7 @@
 import { getPrisma } from '@/http/prisma/prisma'
 import { Server, createServer } from 'http'
 import request from 'supertest'
+import { makeAuthentication } from 'test/factories/make-authentication'
 import { makePrismaUser } from 'test/factories/make-user'
 
 let server: Server
@@ -17,13 +18,17 @@ describe('Create Portifolio (E2E)', () => {
 
   test('[POST] /portifolios', async () => {
     const user = await makePrismaUser()
+    const token = makeAuthentication(user.id.toString())
 
-    const response = await request(server).post('/portifolios').send({
-      userId: user.id.toString(),
-      title: 'My last project',
-      description: 'This project was developed with TS and React.',
-      link: 'https://example.com',
-    })
+    const response = await request(server)
+      .post('/portifolios')
+      .send({
+        userId: user.id.toString(),
+        title: 'My last project',
+        description: 'This project was developed with TS and React.',
+        link: 'https://example.com',
+      })
+      .set('Authorization', `Bearer ${token}`)
 
     expect(response.statusCode).toBe(201)
 

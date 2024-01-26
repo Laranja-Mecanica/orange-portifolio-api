@@ -1,9 +1,10 @@
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { makeDeletePortifolioUseCase } from '@/domain/application/use-cases/factories/make-delete-portifolio-use-case'
-import { Request, Response } from 'express'
+import { customRequest } from '@/http/midllewares/authenticate'
+import { Response } from 'express'
 import { z } from 'zod'
 
-export const deletePortifolio = async (req: Request, res: Response) => {
+export const deletePortifolio = async (req: customRequest, res: Response) => {
   const deletePortifolioParamsSchema = z.object({
     id: z.string(),
   })
