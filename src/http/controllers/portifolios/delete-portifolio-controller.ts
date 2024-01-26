@@ -1,3 +1,4 @@
+import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { makeDeletePortifolioUseCase } from '@/domain/application/use-cases/factories/make-delete-portifolio-use-case'
 import { customRequest } from '@/http/midllewares/authenticate'
@@ -26,7 +27,8 @@ export const deletePortifolio = async (req: customRequest, res: Response) => {
     switch (error.constructor) {
       case ResourceNotFoundError:
         return res.status(404).json({ message: error.message })
-
+      case NotAllowedError:
+        return res.status(401).json({ message: error.message })
       default:
         return res.status(500).json({ message: 'Internal server error' })
     }
