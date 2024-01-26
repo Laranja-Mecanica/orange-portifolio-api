@@ -1,8 +1,9 @@
 import express from 'express'
-import { authenticate } from './http/controllers/authenticate'
-import { createPortifolio } from './http/controllers/create-portifolio'
-import { deletePortifolio } from './http/controllers/delete-portifolio'
-import { register } from './http/controllers/register'
+
+import { createPortifolio } from './http/controllers/portifolios/create-portifolio'
+import { deletePortifolio } from './http/controllers/portifolios/delete-portifolio'
+import { authenticate } from './http/controllers/users/authenticate'
+import { register } from './http/controllers/users/register'
 
 export const app = express()
 

@@ -1,6 +1,6 @@
+import { getPrisma } from '@/http/prisma/prisma'
 import { Server, createServer } from 'http'
 import request from 'supertest'
-import { getPrisma } from '../prisma/prisma'
 
 let server: Server
 
