@@ -11,10 +11,13 @@ export const deletePortifolio = async (req: customRequest, res: Response) => {
 
   const { id } = deletePortifolioParamsSchema.parse(req.params)
 
+  const userId = req.userId
+
   const deleteportifolioUseCase = makeDeletePortifolioUseCase()
 
   const result = await deleteportifolioUseCase.execute({
     id,
+    userId,
   })
 
   if (result.isLeft()) {
