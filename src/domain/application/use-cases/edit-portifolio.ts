@@ -1,4 +1,5 @@
 import { Either, left, right } from '@/core/either'
+import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { PortifoliosRepository } from '@/domain/application/repositories/portifolios-repository'
 
@@ -7,9 +8,13 @@ interface EditPortifolioUseCaseRequest {
   title: string
   description: string
   link: string
+  userId: string
 }
 
-type EditPortifolioUseCaseResponse = Either<ResourceNotFoundError, null>
+type EditPortifolioUseCaseResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
+  null
+>
 
 export class EditPortifolioUseCase {
   constructor(private portifoliosRepository: PortifoliosRepository) {}
@@ -19,11 +24,16 @@ export class EditPortifolioUseCase {
     title,
     description,
     link,
+    userId,
   }: EditPortifolioUseCaseRequest): Promise<EditPortifolioUseCaseResponse> {
     const portifolio = await this.portifoliosRepository.findById(portifolioId)
 
     if (!portifolio) {
       return left(new ResourceNotFoundError())
+    }
+
+    if (userId !== portifolio.userId.toString()) {
+      return left(new NotAllowedError())
     }
 
     portifolio.title = title
