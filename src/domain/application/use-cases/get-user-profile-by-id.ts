@@ -4,7 +4,7 @@ import { UsersRepository } from '@/domain/application/repositories/users-reposit
 import { User } from '@/domain/entities/user'
 
 interface GetUserProfileUseCaseRequest {
-  userId: string
+  id: string
 }
 
 type GetUserProfileUseCaseResponse = Either<
@@ -14,13 +14,13 @@ type GetUserProfileUseCaseResponse = Either<
   }
 >
 
-export class GetUserProfileUseCase {
+export class GetUserProfileByIdUseCase {
   constructor(private usersRepository: UsersRepository) {}
 
   async execute({
-    userId,
+    id,
   }: GetUserProfileUseCaseRequest): Promise<GetUserProfileUseCaseResponse> {
-    const user = await this.usersRepository.findById(userId)
+    const user = await this.usersRepository.findById(id)
 
     if (!user) {
       return left(new ResourceNotFoundError())

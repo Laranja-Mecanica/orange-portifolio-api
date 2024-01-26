@@ -25,6 +25,10 @@ export class User extends Entity<UserProps> {
     return this.props.password
   }
 
+  // set password(password: string) {
+  //   this.props.password = password
+  // }
+
   static create(props: UserProps, id?: UniqueEntityID) {
     const user = new User({ ...props }, id)
 
