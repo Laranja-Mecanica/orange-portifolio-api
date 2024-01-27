@@ -6,8 +6,18 @@ import { PrismaUserMapper } from './mappers/prisma-user-mapper'
 const prisma = getPrisma()
 
 export class PrismaUsersRespository implements UsersRepository {
-  findById(id: string): Promise<User | null> {
-    throw new Error('Method not implemented.')
+  async findById(id: string) {
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    if (!user) {
+      return user
+    }
+
+    return PrismaUserMapper.toDomain(user)
   }
 
   async findByEmail(email: string) {

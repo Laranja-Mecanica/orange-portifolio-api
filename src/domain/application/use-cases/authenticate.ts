@@ -1,7 +1,7 @@
 import { Either, left, right } from '@/core/either'
 import { UsersRepository } from '@/domain/application/repositories/users-repository'
-import { User } from '@/domain/entities/user'
-import { compare } from 'bcrypt'
+import { Encrypter } from '../cryptography/encrypter'
+import { Hasher } from '../cryptography/hasher'
 import { WrongCredentialsError } from './errors/wrong-credentials-error'
 
 interface AuthenticateUseCaseRequest {
@@ -12,12 +12,16 @@ interface AuthenticateUseCaseRequest {
 type AuthenticateUseCaseResponse = Either<
   WrongCredentialsError,
   {
-    user: User
+    accessToken: string
   }
 >
 
 export class AuthenticateUseCase {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(
+    private usersRepository: UsersRepository,
+    private hasher: Hasher,
+    private encrypter: Encrypter,
+  ) {}
 
   async execute({
     email,
@@ -29,12 +33,16 @@ export class AuthenticateUseCase {
       return left(new WrongCredentialsError())
     }
 
-    const isPasswordMatch = await compare(password, user.password)
+    const isPasswordMatch = await this.hasher.compare(password, user.password)
 
     if (!isPasswordMatch) {
       return left(new WrongCredentialsError())
     }
 
-    return right({ user })
+    const accessToken = await this.encrypter.encrypt({
+      sub: user.id.toString(),
+    })
+
+    return right({ accessToken })
   }
 }

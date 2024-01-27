@@ -22,7 +22,6 @@ describe('Edit Portifolio Use Case', () => {
       portifolioId,
       title: 'Updated title',
       description: 'Updated description',
-      tag: 'Node.js',
       link: 'random-link',
     })
 

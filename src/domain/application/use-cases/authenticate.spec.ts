@@ -1,20 +1,31 @@
-import { hash } from 'bcrypt'
 import { makeUser } from 'test/factories/make-user'
 import { InMemoryUsersRepository } from 'test/respositories/in-memory-users-repository'
+import { FakeEncrypter } from 'test/test/cryptography/fake-encrypter'
+import { FakeHasher } from 'test/test/cryptography/fake-hasher'
+import { Encrypter } from '../cryptography/encrypter'
+import { Hasher } from '../cryptography/hasher'
 import { AuthenticateUseCase } from './authenticate'
 import { WrongCredentialsError } from './errors/wrong-credentials-error'
 
 let inMemoryUsersRepository: InMemoryUsersRepository
+let fakeHasher: Hasher
+let fakeEncrypter: Encrypter
 let sut: AuthenticateUseCase
 
 describe('Authenticate Use Case', () => {
   beforeEach(() => {
     inMemoryUsersRepository = new InMemoryUsersRepository()
-    sut = new AuthenticateUseCase(inMemoryUsersRepository)
+    fakeHasher = new FakeHasher()
+    fakeEncrypter = new FakeEncrypter()
+    sut = new AuthenticateUseCase(
+      inMemoryUsersRepository,
+      fakeHasher,
+      fakeEncrypter,
+    )
   })
 
   it('should be able to authenticate user', async () => {
-    const hashedPassword = await hash('123456', 10)
+    const hashedPassword = await fakeHasher.hash('123456')
 
     const newUser = makeUser({
       email: 'johndoe@example.com',
@@ -30,9 +41,7 @@ describe('Authenticate Use Case', () => {
 
     expect(result.isRight()).toBe(true)
     expect(result.value).toMatchObject({
-      user: expect.objectContaining({
-        id: newUser.id,
-      }),
+      accessToken: expect.any(String),
     })
   })
 
@@ -53,7 +62,7 @@ describe('Authenticate Use Case', () => {
   })
 
   it('should not be able to authenticate with wrong password', async () => {
-    const hashedPassword = await hash('123456', 10)
+    const hashedPassword = await fakeHasher.hash('123456')
 
     const newUser = makeUser({
       email: 'johndoe@example.com',

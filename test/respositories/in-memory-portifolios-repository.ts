@@ -4,6 +4,14 @@ import { Portifolio } from '@/domain/entities/portifolio'
 export class InMemoryPortifoliosRepository implements PortifoliosRepository {
   public items: Portifolio[] = []
 
+  async findManyByUserId(userId: string) {
+    const portifolios = this.items.filter(
+      (item) => item.userId.toString() === userId,
+    )
+
+    return portifolios
+  }
+
   async findById(id: string) {
     const portifolio = this.items.find((item) => item.id.toString() === id)
 
@@ -16,16 +24,12 @@ export class InMemoryPortifoliosRepository implements PortifoliosRepository {
 
   async create(portifolio: Portifolio) {
     this.items.push(portifolio)
-
-    return portifolio
   }
 
   async save(portifolio: Portifolio) {
     const itemIndex = this.items.findIndex((item) => item.id === portifolio.id)
 
     this.items[itemIndex] = portifolio
-
-    return portifolio
   }
 
   async delete(id: string) {

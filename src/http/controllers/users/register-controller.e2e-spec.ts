@@ -1,20 +1,13 @@
-import { env } from '@/env'
-import { Application } from 'express'
-import http, { Server as HTTPServer } from 'http'
+import { getPrisma } from '@/http/prisma/prisma'
+import { Server, createServer } from 'http'
 import request from 'supertest'
-import { getPrisma } from '../prisma/prisma'
 
-let server: HTTPServer
+let server: Server
 
 describe('Register (E2E)', () => {
-  let app: Application
-
   beforeAll(async () => {
-    const { app: expressApp } = await import('@/app')
-    app = expressApp
-
-    server = http.createServer(app)
-    server.listen(env.PORT)
+    const { app } = await import('@/app')
+    server = createServer(app)
   })
 
   afterAll(() => {

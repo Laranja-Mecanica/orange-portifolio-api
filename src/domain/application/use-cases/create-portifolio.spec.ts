@@ -12,9 +12,9 @@ describe('Create Portifolio Use Case', () => {
 
   it('should be able an user create a portifolio', async () => {
     const result = await sut.execute({
+      userId: 'user-01',
       title: 'New Project',
       description: 'Nice description here...',
-      tag: 'Back-end',
       link: 'random-link',
     })
 

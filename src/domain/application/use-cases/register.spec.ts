@@ -1,14 +1,16 @@
-import { compare } from 'bcrypt'
 import { InMemoryUsersRepository } from 'test/respositories/in-memory-users-repository'
+import { FakeHasher } from 'test/test/cryptography/fake-hasher'
 import { RegisterUseCase } from './register'
 
 let inMemoryUsersRepository: InMemoryUsersRepository
+let fakeHasher: FakeHasher
 let sut: RegisterUseCase
 
 describe('Register Use Case', () => {
   beforeEach(() => {
     inMemoryUsersRepository = new InMemoryUsersRepository()
-    sut = new RegisterUseCase(inMemoryUsersRepository)
+    fakeHasher = new FakeHasher()
+    sut = new RegisterUseCase(inMemoryUsersRepository, fakeHasher)
   })
 
   it('should be able to register an user', async () => {
@@ -31,7 +33,7 @@ describe('Register Use Case', () => {
       password: '123456',
     })
 
-    const isPasswordHashed = await compare(
+    const isPasswordHashed = await fakeHasher.compare(
       '123456',
       inMemoryUsersRepository.items[0].password,
     )

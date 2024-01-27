@@ -1,17 +1,17 @@
 import { makeUser } from 'test/factories/make-user'
 import { InMemoryUsersRepository } from 'test/respositories/in-memory-users-repository'
-import { GetUserProfileUseCase } from './get-user-profile'
+import { GetUserProfileByIdUseCase } from './get-user-profile-by-id'
 
 let inMemoryUsersRepository: InMemoryUsersRepository
-let sut: GetUserProfileUseCase
+let sut: GetUserProfileByIdUseCase
 
-describe('Get User Profile Use Case', () => {
+describe('Get User Profile by Id Use Case', () => {
   beforeEach(() => {
     inMemoryUsersRepository = new InMemoryUsersRepository()
-    sut = new GetUserProfileUseCase(inMemoryUsersRepository)
+    sut = new GetUserProfileByIdUseCase(inMemoryUsersRepository)
   })
 
-  it('should be able to get user profile', async () => {
+  it('should be able to get user profile by id', async () => {
     const createdUser = makeUser()
 
     inMemoryUsersRepository.items.push(createdUser)
@@ -19,7 +19,7 @@ describe('Get User Profile Use Case', () => {
     const userId = createdUser.id.toString()
 
     const result = await sut.execute({
-      userId,
+      id: userId,
     })
 
     expect(result.isRight()).toBe(true)
