@@ -1,11 +1,10 @@
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { makeGetPortifolioByIdUseCase } from '@/domain/application/use-cases/factories/make-get-portifolio-by-id-use-case'
-import { customRequest } from '@/http/midllewares/authenticate'
 import { PortifolioPresenter } from '@/http/presenters/portifolio-presenter'
-import { Response } from 'express'
+import { Request, Response } from 'express'
 import { z } from 'zod'
 
-export const getPortifolioById = async (req: customRequest, res: Response) => {
+export const getPortifolioById = async (req: Request, res: Response) => {
   const getPortifolioByIdParamsSchema = z.object({
     id: z.string(),
   })
