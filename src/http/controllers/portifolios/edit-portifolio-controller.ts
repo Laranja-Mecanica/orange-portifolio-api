@@ -13,10 +13,13 @@ export const editPortifolio = async (req: customRequest, res: Response) => {
     title: z.string(),
     description: z.string(),
     link: z.string(),
+    tags: z.array(z.enum(['UX', 'UI', 'Web', 'Mobile'])).length(2),
   })
 
   const { id } = editPortifolioParamsSchema.parse(req.params)
-  const { title, description, link } = editPortifolioBodySchema.parse(req.body)
+  const { title, description, link, tags } = editPortifolioBodySchema.parse(
+    req.body,
+  )
   const userId = req.userId
 
   const editportifolioUseCase = makeEditPortifolioUseCase()
@@ -26,6 +29,7 @@ export const editPortifolio = async (req: customRequest, res: Response) => {
     title,
     description,
     link,
+    tags,
     userId,
   })
 
