@@ -8,6 +8,7 @@ export class PrismaUserMapper {
       {
         name: raw.name,
         lastName: raw.lastName,
+        country: raw.country,
         email: raw.email,
         password: raw.password,
       },
@@ -20,6 +21,7 @@ export class PrismaUserMapper {
       id: user.id.toString(),
       name: user.name,
       lastName: user.lastName,
+      country: user.country,
       email: user.email,
       password: user.password,
     }

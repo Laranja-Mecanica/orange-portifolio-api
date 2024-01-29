@@ -4,6 +4,7 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 export interface UserProps {
   name: string
   lastName: string
+  country: string
   email: string
   password: string
 }
@@ -25,9 +26,9 @@ export class User extends Entity<UserProps> {
     return this.props.password
   }
 
-  // set password(password: string) {
-  //   this.props.password = password
-  // }
+  get country() {
+    return this.props.country
+  }
 
   static create(props: UserProps, id?: UniqueEntityID) {
     const user = new User({ ...props }, id)

@@ -22,6 +22,7 @@ describe('Authenticate (E2E)', () => {
       data: {
         name: 'John',
         lastName: 'Doe',
+        country: 'Greece',
         email: 'johndoe@example.com',
         password: await hash('123456', 10),
       },

@@ -9,6 +9,7 @@ interface RegisterUseCaseRequest {
   lastName: string
   email: string
   password: string
+  country: string
 }
 
 type RegisterUseCaseResponse = Either<
@@ -29,6 +30,7 @@ export class RegisterUseCase {
     email,
     lastName,
     password,
+    country,
   }: RegisterUseCaseRequest): Promise<RegisterUseCaseResponse> {
     const isEmailAlreadyExists = await this.usersRepository.findByEmail(email)
 
@@ -42,6 +44,7 @@ export class RegisterUseCase {
       name,
       lastName,
       email,
+      country,
       password: password_hash,
     })
 

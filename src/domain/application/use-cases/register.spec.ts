@@ -18,6 +18,7 @@ describe('Register Use Case', () => {
       name: 'John',
       lastName: 'Doe',
       email: 'johndoe@example.com',
+      country: 'Greece',
       password: '123456',
     })
 
@@ -30,6 +31,7 @@ describe('Register Use Case', () => {
       name: 'John',
       lastName: 'Doe',
       email: 'johndoe@example.com',
+      country: 'Greece',
       password: '123456',
     })
 

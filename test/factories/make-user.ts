@@ -14,6 +14,7 @@ export function makeUser(
       lastName: faker.person.lastName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
+      country: faker.location.country(),
       ...override,
     },
     id,
