@@ -14,6 +14,7 @@ export function makePortifolio(
       title: faker.lorem.sentence(3),
       description: faker.lorem.sentence(8),
       link: faker.internet.url(),
+      tags: [faker.word.sample(5), faker.word.sample(5)],
       ...override,
     },
     id,
