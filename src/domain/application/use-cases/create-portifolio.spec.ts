@@ -16,9 +16,11 @@ describe('Create Portifolio Use Case', () => {
       title: 'New Project',
       description: 'Nice description here...',
       link: 'random-link',
+      tags: ['tag-01', 'tag-02'],
     })
 
     expect(result.isRight()).toBe(true)
     expect(inMemoryPortifoliosRepository.items).toHaveLength(1)
+    expect(inMemoryPortifoliosRepository.items[0].tags).toHaveLength(2)
   })
 })
