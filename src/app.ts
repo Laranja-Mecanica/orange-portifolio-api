@@ -1,3 +1,4 @@
+import cors from 'cors'
 import express from 'express'
 
 import { editPortifolio } from './http/controllers/portifolios/edit-portifolio-controller'
@@ -9,11 +10,13 @@ import { deletePortifolio } from './http/controllers/portifolios/delete-portifol
 import { authenticate } from './http/controllers/users/authenticate-controller'
 import { getUserProfileById } from './http/controllers/users/get-user-profile-by-id-controller'
 import { register } from './http/controllers/users/register-controller'
+import { options } from './http/cors/cors.config'
 import { authorize } from './http/midllewares/authenticate'
 
 export const app = express()
 
 app.use(express.json())
+app.use(cors(options))
 
 app.post('/register', register)
 app.post('/session', authenticate)
