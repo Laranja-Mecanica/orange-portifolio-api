@@ -8,9 +8,10 @@ export const createPortifolio = async (req: customRequest, res: Response) => {
     title: z.string(),
     description: z.string(),
     link: z.string(),
+    tags: z.array(z.enum(['UX', 'UI', 'Web', 'Mobile'])).length(2),
   })
 
-  const { title, description, link } = createPortifolioBodySchema.parse(
+  const { title, description, link, tags } = createPortifolioBodySchema.parse(
     req.body,
   )
 
@@ -22,6 +23,7 @@ export const createPortifolio = async (req: customRequest, res: Response) => {
     title,
     description,
     link,
+    tags,
   })
 
   if (result.isLeft()) {

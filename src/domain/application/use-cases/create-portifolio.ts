@@ -8,6 +8,7 @@ interface CreatePortifolioUseCaseRequest {
   title: string
   link: string
   description: string
+  tags: string[]
 }
 
 type CreatePortifolioUseCaseReponse = Either<
@@ -25,12 +26,14 @@ export class CreatePortifolioUseCase {
     title,
     link,
     description,
+    tags,
   }: CreatePortifolioUseCaseRequest): Promise<CreatePortifolioUseCaseReponse> {
     const portifolio = Portifolio.create({
       userId: new UniqueEntityID(userId),
       title,
       description,
       link,
+      tags,
     })
 
     await this.portifoliosRepository.create(portifolio)
