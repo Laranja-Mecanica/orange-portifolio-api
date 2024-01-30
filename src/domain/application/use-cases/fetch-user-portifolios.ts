@@ -2,8 +2,9 @@ import { Either, right } from '@/core/either'
 import { Portifolio } from '@/domain/entities/portifolio'
 import { PortifoliosRepository } from '../repositories/portifolios-repository'
 
-interface FetchUserProfileUseCaseRequest {
+interface FetchUserPortifolioUseCaseRequest {
   id: string
+  page: number
 }
 
 type FetchUserPortifolioUseCaseResponse = Either<
@@ -18,8 +19,12 @@ export class FetchUserPortifolioUseCase {
 
   async execute({
     id,
-  }: FetchUserProfileUseCaseRequest): Promise<FetchUserPortifolioUseCaseResponse> {
-    const portifolios = await this.portifolioRepository.findManyByUserId(id)
+    page,
+  }: FetchUserPortifolioUseCaseRequest): Promise<FetchUserPortifolioUseCaseResponse> {
+    const portifolios = await this.portifolioRepository.findManyByUserId(
+      id,
+      page,
+    )
 
     return right({ portifolios })
   }

@@ -34,6 +34,7 @@ describe('Edit Portifolio (E2E)', () => {
         title: 'Updated title',
         description: 'Updated description',
         link: 'updatedlink.com',
+        tags: ['UI', 'Web'],
       })
 
     expect(response.statusCode).toBe(204)
@@ -47,6 +48,7 @@ describe('Edit Portifolio (E2E)', () => {
         title: 'Updated title',
         description: 'Updated description',
         link: 'updatedlink.com',
+        tags: ['UI', 'Web'],
       }),
     )
   })

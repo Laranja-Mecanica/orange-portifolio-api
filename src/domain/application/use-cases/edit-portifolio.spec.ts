@@ -25,6 +25,7 @@ describe('Edit Portifolio Use Case', () => {
       title: 'Updated title',
       description: 'Updated description',
       link: 'random-link',
+      tags: ['tag-1', 'tag-2'],
       userId: portifolioOwnerId,
     })
 
@@ -33,6 +34,10 @@ describe('Edit Portifolio Use Case', () => {
     expect(inMemoryPortifoliosRepository.items[0].description).toBe(
       'Updated description',
     )
+    expect(inMemoryPortifoliosRepository.items[0].tags).toStrictEqual([
+      'tag-1',
+      'tag-2',
+    ])
   })
 
   it('should not be able to edit a portifolio from another user', async () => {
@@ -48,6 +53,7 @@ describe('Edit Portifolio Use Case', () => {
       description: 'Updated description',
       link: 'random-link',
       userId: 'random-user',
+      tags: ['tag-01', 'tag-2'],
     })
 
     expect(result.isLeft()).toBe(true)

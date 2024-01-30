@@ -5,6 +5,7 @@ export class UserPresenter {
     return {
       name: user.name,
       lastName: user.lastName,
+      country: user.country,
       email: user.email,
     }
   }
