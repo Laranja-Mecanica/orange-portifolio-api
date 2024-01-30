@@ -1,10 +1,9 @@
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { makeEditPortifolioUseCase } from '@/domain/application/use-cases/factories/make-edit-portifolio-use-case'
-import { customRequest } from '@/http/midllewares/authenticate'
-import { Response } from 'express'
+import { Request, Response } from 'express'
 import { z } from 'zod'
 
-export const editPortifolio = async (req: customRequest, res: Response) => {
+export const editPortifolio = async (req: Request, res: Response) => {
   const editPortifolioParamsSchema = z.object({
     id: z.string(),
   })
@@ -17,7 +16,12 @@ export const editPortifolio = async (req: customRequest, res: Response) => {
 
   const { id } = editPortifolioParamsSchema.parse(req.params)
   const { title, description, link } = editPortifolioBodySchema.parse(req.body)
-  const userId = req.userId
+
+  const userId = req.payload?.tokenPayload.sub
+
+  if (!userId) {
+    return res.status(401).json({ message: 'Not allowed' })
+  }
 
   const editportifolioUseCase = makeEditPortifolioUseCase()
 
