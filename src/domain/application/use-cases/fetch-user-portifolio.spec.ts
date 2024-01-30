@@ -20,11 +20,27 @@ describe('Fetch User Portifolio Use Case', () => {
     inMemoryPortifoliosRepository.items.push(portifolio2)
     inMemoryPortifoliosRepository.items.push(makePortifolio())
 
-    const result = await sut.execute({ id: '777' })
+    const result = await sut.execute({ id: '777', page: 1 })
 
     expect(result.value?.portifolios).toHaveLength(2)
     expect(result.value?.portifolios).toEqual(
       expect.arrayContaining([portifolio1, portifolio2]),
     )
+  })
+
+  it('should fetch 20 itens per page', async () => {
+    for (let i = 0; i < 22; i++) {
+      inMemoryPortifoliosRepository.items.push(
+        makePortifolio({ userId: new UniqueEntityID('user-01') }),
+      )
+    }
+
+    const result = await sut.execute({
+      id: 'user-01',
+      page: 2,
+    })
+
+    expect(result.isRight()).toBe(true)
+    expect(result.value?.portifolios).toHaveLength(2)
   })
 })

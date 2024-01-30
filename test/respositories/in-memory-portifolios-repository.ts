@@ -4,10 +4,10 @@ import { Portifolio } from '@/domain/entities/portifolio'
 export class InMemoryPortifoliosRepository implements PortifoliosRepository {
   public items: Portifolio[] = []
 
-  async findManyByUserId(userId: string) {
-    const portifolios = this.items.filter(
-      (item) => item.userId.toString() === userId,
-    )
+  async findManyByUserId(userId: string, page: number) {
+    const portifolios = this.items
+      .filter((item) => item.userId.toString() === userId)
+      .slice((page - 1) * 20, page * 20)
 
     return portifolios
   }
