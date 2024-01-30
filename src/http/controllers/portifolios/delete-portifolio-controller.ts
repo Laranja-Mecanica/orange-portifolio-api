@@ -1,18 +1,21 @@
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { makeDeletePortifolioUseCase } from '@/domain/application/use-cases/factories/make-delete-portifolio-use-case'
-import { customRequest } from '@/http/midllewares/authenticate'
-import { Response } from 'express'
+import { Request, Response } from 'express'
 import { z } from 'zod'
 
-export const deletePortifolio = async (req: customRequest, res: Response) => {
+export const deletePortifolio = async (req: Request, res: Response) => {
   const deletePortifolioParamsSchema = z.object({
     id: z.string(),
   })
 
   const { id } = deletePortifolioParamsSchema.parse(req.params)
 
-  const userId = req.userId
+  const userId = req.payload?.tokenPayload.sub
+
+  if (!userId) {
+    return res.status(401).json({ message: 'Not allowed' })
+  }
 
   const deleteportifolioUseCase = makeDeletePortifolioUseCase()
 

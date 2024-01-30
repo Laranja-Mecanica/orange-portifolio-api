@@ -6,12 +6,8 @@ interface JwtPayload {
   sub: string
 }
 
-export interface customRequest extends Request {
-  userId: string
-}
-
 export const authorize = async (
-  req: customRequest,
+  req: Request,
   res: Response,
   next: NextFunction,
 ) => {
@@ -25,10 +21,11 @@ export const authorize = async (
 
   const payload = verify(token, env.JWT_PVK) as JwtPayload
 
-  req.userId = payload.sub
+  req.payload = { tokenPayload: payload }
 
   if (!payload.sub) {
     return res.status(401).json({ message: 'Unauthorized' })
   }
+
   next()
 }
