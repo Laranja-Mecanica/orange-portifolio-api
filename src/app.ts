@@ -13,7 +13,8 @@ import { register } from './http/controllers/users/register-controller'
 import { options } from './http/cors/cors.config'
 
 import swaggerUi from 'swagger-ui-express'
-import swaggerOutput from './swagger_output.json'
+import swaggerOutput from '../docs/swagger_output.json'
+import { authorize } from './http/midllewares/authenticate'
 
 export const app = express()
 
@@ -23,7 +24,9 @@ app.use(cors(options))
 app.post('/register', register)
 app.post('/session', authenticate)
 
-// app.use(authorize)
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput))
+
+app.use(authorize)
 
 app.get('/portifolios/:id', getPortifolioById)
 app.post('/portifolios', createPortifolio)
@@ -32,5 +35,3 @@ app.delete('/portifolios/:id', deletePortifolio)
 
 app.get('/users/:id', getUserProfileById)
 app.get('/users/:id/portifolios', fetchUserPortifolio)
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput))

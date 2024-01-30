@@ -13,7 +13,7 @@
     "test:watch": "vitest",
     "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
     "test:e2e:watch": "vitest --config ./vitest.config.e2e.ts",
-    "docs": "node ./dist/swagger.js"
+    "docs:generate": "ts-node ./docs/swagger.ts"
   },
   "keywords": [],
   "author": "",
@@ -31,11 +31,13 @@
     "eslint": "8.56.0",
     "prisma": "5.8.1",
     "supertest": "6.3.4",
+    "ts-node": "10.9.2",
     "tsup": "8.0.1",
     "tsx": "4.7.0",
     "typescript": "5.3.3",
     "vite-tsconfig-paths": "4.3.1",
-    "vitest": "1.2.1"
+    "vitest": "1.2.1",
+    "swagger-autogen": "2.23.7"
   },
   "dependencies": {
     "@prisma/client": "5.8.1",
@@ -44,7 +46,6 @@
     "dotenv": "16.3.2",
     "express": "4.18.2",
     "jsonwebtoken": "9.0.2",
-    "swagger-autogen": "2.23.7",
     "swagger-ui-express": "5.0.0",
     "zod": "3.22.4"
   }
