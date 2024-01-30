@@ -23,6 +23,7 @@ describe('Get Portifolio by Id (E2E)', () => {
     const portifolio = await makePrismaPortifolio({
       userId: user.id,
       title: 'Nice project!',
+      tags: ['Web', 'Mobile'],
     })
 
     const portifolioId = portifolio.id.toString()
@@ -36,6 +37,7 @@ describe('Get Portifolio by Id (E2E)', () => {
     expect(response.body).toEqual({
       portifolio: expect.objectContaining({
         title: 'Nice project!',
+        tags: ['Web', 'Mobile'],
       }),
     })
   })

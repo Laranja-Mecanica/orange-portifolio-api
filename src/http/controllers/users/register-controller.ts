@@ -7,17 +7,21 @@ export const register = async (req: Request, res: Response) => {
   const registerBodySchema = z.object({
     name: z.string(),
     lastName: z.string(),
+    country: z.string(),
     email: z.string().email(),
     password: z.string().min(6),
   })
 
-  const { name, lastName, email, password } = registerBodySchema.parse(req.body)
+  const { name, lastName, country, email, password } = registerBodySchema.parse(
+    req.body,
+  )
 
   const registerUseCase = makeRegisterUseCase()
 
   const result = await registerUseCase.execute({
     name,
     lastName,
+    country,
     email,
     password,
   })

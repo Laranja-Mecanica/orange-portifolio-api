@@ -9,6 +9,7 @@ interface EditPortifolioUseCaseRequest {
   description: string
   link: string
   userId: string
+  tags: string[]
 }
 
 type EditPortifolioUseCaseResponse = Either<
@@ -24,6 +25,7 @@ export class EditPortifolioUseCase {
     title,
     description,
     link,
+    tags,
     userId,
   }: EditPortifolioUseCaseRequest): Promise<EditPortifolioUseCaseResponse> {
     const portifolio = await this.portifoliosRepository.findById(portifolioId)
@@ -39,6 +41,7 @@ export class EditPortifolioUseCase {
     portifolio.title = title
     portifolio.description = description
     portifolio.link = link
+    portifolio.tags = tags
 
     await this.portifoliosRepository.save(portifolio)
 

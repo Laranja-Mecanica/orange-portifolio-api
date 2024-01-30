@@ -12,11 +12,15 @@ export const editPortifolio = async (req: Request, res: Response) => {
     title: z.string(),
     description: z.string(),
     link: z.string(),
+    tags: z.array(z.enum(['UX', 'UI', 'Web', 'Mobile'])).length(2),
   })
 
   const { id } = editPortifolioParamsSchema.parse(req.params)
-  const { title, description, link } = editPortifolioBodySchema.parse(req.body)
-
+  
+  const { title, description, link, tags } = editPortifolioBodySchema.parse(
+    req.body,
+  )
+  
   const userId = req.payload?.tokenPayload.sub
 
   if (!userId) {
@@ -30,6 +34,7 @@ export const editPortifolio = async (req: Request, res: Response) => {
     title,
     description,
     link,
+    tags,
     userId,
   })
 

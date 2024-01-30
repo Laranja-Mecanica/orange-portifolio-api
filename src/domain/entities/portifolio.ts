@@ -7,6 +7,7 @@ export interface PortifolioProps {
   title: string
   link: string
   description: string
+  tags: string[]
   createdAt: Date
 }
 
@@ -37,6 +38,14 @@ export class Portifolio extends Entity<PortifolioProps> {
 
   set description(description: string) {
     this.props.description = description
+  }
+
+  get tags() {
+    return this.props.tags
+  }
+
+  set tags(tags: string[]) {
+    this.props.tags = tags
   }
 
   get createdAt() {

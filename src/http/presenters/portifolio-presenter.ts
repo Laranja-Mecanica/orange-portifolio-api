@@ -7,6 +7,7 @@ export class PortifolioPresenter {
       title: portifolio.title,
       description: portifolio.description,
       link: portifolio.link,
+      tags: portifolio.tags,
       createdAt: portifolio.createdAt,
     }
   }
