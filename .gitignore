@@ -3,3 +3,6 @@ build
 
 # Environment Variables
 .env
+
+# PNPM
+pnpm-lock.yaml
