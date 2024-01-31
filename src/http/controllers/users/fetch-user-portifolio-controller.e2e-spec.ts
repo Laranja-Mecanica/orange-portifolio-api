@@ -19,11 +19,13 @@ describe('Fetch User Portifolio (E2E)', () => {
   test('[GET] /users/:id/portifolios', async () => {
     const user = await makePrismaUser()
     const user2 = await makePrismaUser()
+
     await Promise.all([
       makePrismaPortifolio({ userId: user.id }),
       makePrismaPortifolio({ userId: user.id }),
       makePrismaPortifolio({ userId: user2.id }),
     ])
+
     const userId = user.id.toString()
 
     const token = makeAuthentication(userId)
@@ -33,6 +35,6 @@ describe('Fetch User Portifolio (E2E)', () => {
       .set('Authorization', `Bearer ${token}`)
 
     expect(response.statusCode).toBe(200)
-    expect(response.body)
+    expect(response.body.portifolios).toHaveLength(2)
   })
 })
