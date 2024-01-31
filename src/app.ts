@@ -24,7 +24,15 @@ app.use(cors(options))
 app.post('/register', register)
 app.post('/session', authenticate)
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput))
+app.use(
+  '/docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerOutput, {
+    swaggerOptions: {
+      supportedSubmitMethods: [],
+    },
+  }),
+)
 
 app.use(authorize)
 
