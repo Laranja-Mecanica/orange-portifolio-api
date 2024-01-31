@@ -13,6 +13,9 @@ import { register } from './http/controllers/users/register-controller'
 import { options } from './http/cors/cors.config'
 import { authorize } from './http/midllewares/authenticate'
 
+import swaggerUi from 'swagger-ui-express'
+import swaggerDoc from '../docs/swagger-api-doc.json'
+
 export const app = express()
 
 app.use(express.json())
@@ -20,6 +23,16 @@ app.use(cors(options))
 
 app.post('/register', register)
 app.post('/session', authenticate)
+
+app.use(
+  '/docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDoc, {
+    swaggerOptions: {
+      supportedSubmitMethods: [],
+    },
+  }),
+)
 
 app.use(authorize)
 
