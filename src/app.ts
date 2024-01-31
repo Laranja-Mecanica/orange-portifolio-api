@@ -11,10 +11,10 @@ import { authenticate } from './http/controllers/users/authenticate-controller'
 import { getUserProfileById } from './http/controllers/users/get-user-profile-by-id-controller'
 import { register } from './http/controllers/users/register-controller'
 import { options } from './http/cors/cors.config'
+import { authorize } from './http/midllewares/authenticate'
 
 import swaggerUi from 'swagger-ui-express'
-import swaggerOutput from '../docs/swagger_output.json'
-import { authorize } from './http/midllewares/authenticate'
+import swaggerDoc from '../docs/swagger-api-doc.json'
 
 export const app = express()
 
@@ -27,7 +27,7 @@ app.post('/session', authenticate)
 app.use(
   '/docs',
   swaggerUi.serve,
-  swaggerUi.setup(swaggerOutput, {
+  swaggerUi.setup(swaggerDoc, {
     swaggerOptions: {
       supportedSubmitMethods: [],
     },
