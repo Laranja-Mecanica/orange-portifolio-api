@@ -16,6 +16,7 @@ import { env } from '@/env'
 import session from 'express-session'
 import passport from 'passport'
 import swaggerUi from 'swagger-ui-express'
+import { authorize } from './http/midllewares/authenticate'
 import './http/oauth/google-strategy'
 import swaggerOutput from './swagger_output.json'
 
@@ -34,7 +35,7 @@ app.use(
     secret: env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: true },
+    cookie: { secure: true, signed: true },
   }),
 )
 
@@ -49,7 +50,7 @@ app.get(
   }),
 )
 
-// app.use(authorize)
+app.use(authorize)
 
 app.get('/portifolios/:id', getPortifolioById)
 app.post('/portifolios', createPortifolio)
