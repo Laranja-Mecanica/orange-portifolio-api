@@ -12,9 +12,10 @@ import { getUserProfileById } from './http/controllers/users/get-user-profile-by
 import { register } from './http/controllers/users/register-controller'
 import { options } from './http/cors/cors.config'
 
+import { env } from '@/env'
+import session from 'express-session'
 import passport from 'passport'
 import swaggerUi from 'swagger-ui-express'
-import { authorize } from './http/midllewares/authenticate'
 import './http/oauth/google-strategy'
 import swaggerOutput from './swagger_output.json'
 
@@ -28,16 +29,27 @@ app.post('/session', authenticate)
 
 app.use(passport.initialize())
 
+app.use(
+  session({
+    secret: env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: true },
+  }),
+)
+
+app.use(passport.authenticate('session'))
+
 app.get(
-  '/google/auth',
+  '/oauth2/redirect/google',
   passport.authenticate('google', {
-    scope: ['profile'],
-    successRedirect: '/register',
+    scope: ['profile', 'email'],
+    successRedirect: '/',
     failureRedirect: '/session',
   }),
 )
 
-app.use(authorize)
+// app.use(authorize)
 
 app.get('/portifolios/:id', getPortifolioById)
 app.post('/portifolios', createPortifolio)

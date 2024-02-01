@@ -10,7 +10,7 @@ passport.use(
     {
       clientID: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3333/register',
+      callbackURL: 'http://localhost:3333/oauth2/redirect/google',
     },
     (access_token, refresh_token, profile, done) => {
       const user = prisma.user.findFirst({
@@ -38,3 +38,11 @@ passport.use(
     },
   ),
 )
+
+passport.serializeUser(function (user, done) {
+  done(null, user)
+})
+
+passport.deserializeUser(function (user, done) {
+  done(null, false)
+})

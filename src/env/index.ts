@@ -8,6 +8,7 @@ const envSchema = z.object({
   JWT_PVK: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
+  SESSION_SECRET: z.string(),
 })
 
 const _env = envSchema.safeParse(process.env)
