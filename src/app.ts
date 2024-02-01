@@ -13,6 +13,7 @@ import { register } from './http/controllers/users/register-controller'
 import { options } from './http/cors/cors.config'
 
 import swaggerUi from 'swagger-ui-express'
+import { authorize } from './http/midllewares/authenticate'
 import swaggerOutput from './swagger_output.json'
 
 export const app = express()
@@ -23,7 +24,7 @@ app.use(cors(options))
 app.post('/register', register)
 app.post('/session', authenticate)
 
-// app.use(authorize)
+app.use(authorize)
 
 app.get('/portifolios/:id', getPortifolioById)
 app.post('/portifolios', createPortifolio)
