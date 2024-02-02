@@ -8,6 +8,7 @@ export interface PortifolioProps {
   link: string
   description: string
   tags: string[]
+  thumbKey: string
   createdAt: Date
 }
 
@@ -46,6 +47,14 @@ export class Portifolio extends Entity<PortifolioProps> {
 
   set tags(tags: string[]) {
     this.props.tags = tags
+  }
+
+  get thumbKey() {
+    return this.props.thumbKey
+  }
+
+  set thumbKey(thumbKey: string) {
+    this.props.thumbKey = thumbKey
   }
 
   get createdAt() {
