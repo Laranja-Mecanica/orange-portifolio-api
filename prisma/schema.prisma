@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
-  name     String @db.VarChar(50)
-  lastName String @db.VarChar(50)
-  country  String
-  email    String @unique
-  password String
-
+  id          String       @id @default(uuid())
+  name        String       @db.VarChar(50)
+  lastName    String       @db.VarChar(50)
+  country     String?
+  email       String       @unique
+  password    String?
+  googleId    String?
   portifolios Portifolio[]
 
   @@map("users")
@@ -26,6 +26,7 @@ model Portifolio {
   description String
   link        String
   createdAt   DateTime @default(now()) @map("created_at")
+  thumbKey    String
   tags        String[]
 
   user   User   @relation(fields: [userId], references: [id])

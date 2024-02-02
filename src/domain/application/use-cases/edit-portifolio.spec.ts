@@ -26,6 +26,7 @@ describe('Edit Portifolio Use Case', () => {
       description: 'Updated description',
       link: 'random-link',
       tags: ['tag-1', 'tag-2'],
+      thumbKey: 'new-thumb-key-random.jpeg',
       userId: portifolioOwnerId,
     })
 
@@ -38,6 +39,9 @@ describe('Edit Portifolio Use Case', () => {
       'tag-1',
       'tag-2',
     ])
+    expect(inMemoryPortifoliosRepository.items[0].thumbKey).toEqual(
+      'new-thumb-key-random.jpeg',
+    )
   })
 
   it('should not be able to edit a portifolio from another user', async () => {
@@ -53,6 +57,7 @@ describe('Edit Portifolio Use Case', () => {
       description: 'Updated description',
       link: 'random-link',
       userId: 'random-user',
+      thumbKey: 'thumb-key-random.jpeg',
       tags: ['tag-01', 'tag-2'],
     })
 
