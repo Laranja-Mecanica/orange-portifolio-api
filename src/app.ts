@@ -13,7 +13,13 @@ import { register } from './http/controllers/users/register-controller'
 import { options } from './http/cors/cors.config'
 import { authorize } from './http/midllewares/authenticate'
 
+import { env } from '@/env'
+import session from 'express-session'
+import passport from 'passport'
 import swaggerUi from 'swagger-ui-express'
+
+import { authorize } from './http/midllewares/authenticate'
+import './http/oauth/google-strategy'
 import swaggerDoc from '../docs/swagger-api-doc.json'
 
 export const app = express()
@@ -23,6 +29,26 @@ app.use(cors(options))
 
 app.post('/register', register)
 app.post('/session', authenticate)
+
+app.use(passport.initialize())
+
+app.use(
+  session({
+    secret: env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: true, signed: true },
+  }),
+)
+
+app.use(passport.authenticate('session'))
+
+app.get(
+  '/oauth2/redirect/google',
+  passport.authenticate('google', {
+    scope: ['profile', 'email'],
+    successRedirect: '/',
+    failureRedirect: '/session',
 
 app.use(
   '/docs',
