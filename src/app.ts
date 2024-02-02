@@ -46,8 +46,8 @@ app.get(
   '/oauth2/redirect/google',
   passport.authenticate('google', {
     scope: ['profile', 'email'],
-    successRedirect: '/',
-    failureRedirect: '/session',
+    successRedirect: 'https://orange-portifolio.vercel.app/home',
+    failureRedirect: 'https://orange-portifolio.vercel.app/',
   }),
 )
 

@@ -10,7 +10,8 @@ passport.use(
     {
       clientID: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3333/oauth2/redirect/google',
+      callbackURL:
+        'https://orange-app-2m9ib.ondigitalocean.app/oauth2/redirect/google',
     },
     async (access_token, refresh_token, profile, done) => {
       const user = await prisma.user.findFirst({
