@@ -18,9 +18,8 @@ import session from 'express-session'
 import passport from 'passport'
 import swaggerUi from 'swagger-ui-express'
 
-import { authorize } from './http/midllewares/authenticate'
-import './http/oauth/google-strategy'
 import swaggerDoc from '../docs/swagger-api-doc.json'
+import './http/oauth/google-strategy'
 
 export const app = express()
 
@@ -49,6 +48,8 @@ app.get(
     scope: ['profile', 'email'],
     successRedirect: '/',
     failureRedirect: '/session',
+  }),
+)
 
 app.use(
   '/docs',
