@@ -6,10 +6,10 @@ import { PrismaPortifolioMapper } from './mappers/prisma-portifolio-mapper'
 const prisma = getPrisma()
 
 export class PrismaPortifoliosRepository implements PortifoliosRepository {
-  async findManyByUserId(id: string) {
+  async findManyByUserId(userId: string) {
     const portifolios = await prisma.portifolio.findMany({
       where: {
-        id,
+        userId,
       },
     })
 

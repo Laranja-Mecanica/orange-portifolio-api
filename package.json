@@ -12,8 +12,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
-    "test:e2e:watch": "vitest --config ./vitest.config.e2e.ts",
-    "docs": "node ./dist/swagger.js"
+    "test:e2e:watch": "vitest --config ./vitest.config.e2e.ts"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +33,7 @@
     "eslint": "8.56.0",
     "prisma": "5.8.1",
     "supertest": "6.3.4",
+    "ts-node": "10.9.2",
     "tsup": "8.0.1",
     "tsx": "4.7.0",
     "typescript": "5.3.3",
@@ -51,7 +51,6 @@
     "jsonwebtoken": "9.0.2",
     "passport": "0.7.0",
     "passport-google-oauth20": "2.0.0",
-    "swagger-autogen": "2.23.7",
     "swagger-ui-express": "5.0.0",
     "zod": "3.22.4"
   }

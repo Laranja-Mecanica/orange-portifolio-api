@@ -34,6 +34,7 @@ describe('Edit Portifolio (E2E)', () => {
         title: 'Updated title',
         description: 'Updated description',
         link: 'updatedlink.com',
+        thumbKey: 'random-thumb-key.jpeg',
         tags: ['UI', 'Web'],
       })
 
@@ -48,6 +49,7 @@ describe('Edit Portifolio (E2E)', () => {
         title: 'Updated title',
         description: 'Updated description',
         link: 'updatedlink.com',
+        thumbKey: 'random-thumb-key.jpeg',
         tags: ['UI', 'Web'],
       }),
     )

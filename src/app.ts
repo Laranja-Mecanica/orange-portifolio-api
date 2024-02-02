@@ -11,14 +11,16 @@ import { authenticate } from './http/controllers/users/authenticate-controller'
 import { getUserProfileById } from './http/controllers/users/get-user-profile-by-id-controller'
 import { register } from './http/controllers/users/register-controller'
 import { options } from './http/cors/cors.config'
+import { authorize } from './http/midllewares/authenticate'
 
 import { env } from '@/env'
 import session from 'express-session'
 import passport from 'passport'
 import swaggerUi from 'swagger-ui-express'
+
 import { authorize } from './http/midllewares/authenticate'
 import './http/oauth/google-strategy'
-import swaggerOutput from './swagger_output.json'
+import swaggerDoc from '../docs/swagger-api-doc.json'
 
 export const app = express()
 
@@ -47,6 +49,14 @@ app.get(
     scope: ['profile', 'email'],
     successRedirect: '/',
     failureRedirect: '/session',
+
+app.use(
+  '/docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDoc, {
+    swaggerOptions: {
+      supportedSubmitMethods: [],
+    },
   }),
 )
 
@@ -59,5 +69,3 @@ app.delete('/portifolios/:id', deletePortifolio)
 
 app.get('/users/:id', getUserProfileById)
 app.get('/users/:id/portifolios', fetchUserPortifolio)
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput))

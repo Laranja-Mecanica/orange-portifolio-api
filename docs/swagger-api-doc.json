@@ -1,0 +1,498 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Orange Portfólio - API",
+    "description": "This is a simple documentation for you understand and consume this API. You can find out more about\nour projects at [Github](https://github.com/Laranja-Mecanica). \n\nSome useful links:\n- [The Orange Portfolio API repository](https://github.com/Laranja-Mecanica/orange-portifolio-api)\n- [The Orange Portfolio UI](https://github.com/Laranja-Mecanica/orange-portifolio)",
+    "termsOfService": "https://http.cat/images/501.jpg",
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Find out more about Laranja Mecânica",
+    "url": "https://github.com/Laranja-Mecanica"
+  },
+  "servers": [
+    {
+      "url": "https://orange-app-2m9ib.ondigitalocean.app/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "user",
+      "description": "Operations about user"
+    },
+    {
+      "name": "portfolio",
+      "description": "Access to users portfolios"
+    }
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Create user",
+        "description": "This route register a new user in application.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "name": "John",
+                "lastName": "Doe",
+                "country": "Greece",
+                "email": "johndoe@example.com",
+                "password": "segredoalaranjado123"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/session": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Authenticate a user",
+        "description": "This authenticate a user, and return a token.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "email": "johndoe@example.com",
+                "password": "segredoalaranjado123"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": {
+                  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfMTIzIiwiaWF0IjoxNDU4Nzg1Nzk2LCJleHAiOjE0NTg4NzIxOTZ9.qaa4ZYeqYUvvdKppMk88Fo3cjGa_0PD8CUltBHvHGSo"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get user profile by ID",
+        "description": "With this route you can get the profile from a user using just him ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "user123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": {
+                  "name": "John",
+                  "lastName": "Doe",
+                  "country": "Greece",
+                  "email": "johndoe@example.com"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/users/{id}/portifolios": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "List all portfolios from a user",
+        "description": "List all of a user's portfolios, paginating 20 items per page. You can also choose the page with a query parameter, by default it starts on page 1.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "user123"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": "portfolio123",
+                    "title": "My last project",
+                    "description": "This project was developed with TS and React.",
+                    "link": "https://example.com",
+                    "tags": [
+                      "UX",
+                      "UI"
+                    ],
+                    "createdAt": "2024-01-31T15:05:32.282Z"
+                  },
+                  {
+                    "id": "portfolio111",
+                    "title": "My 2 project",
+                    "description": "This project was developed with TS and React.",
+                    "link": "https://example.com",
+                    "tags": [
+                      "UX",
+                      "UI"
+                    ],
+                    "createdAt": "2024-01-31T15:05:32.282Z"
+                  }
+                ]
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/portifolios": {
+      "post": {
+        "tags": [
+          "portfolio"
+        ],
+        "summary": "Create portfolio",
+        "description": "This endpoint create a portfolio for a existing user.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "link": {
+                    "type": "string"
+                  },
+                  "thumbKey": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 2
+                  }
+                },
+                "example": {
+                  "title": "My last project",
+                  "description": "This project was developed with TS and React.",
+                  "link": "https://example.com",
+                  "thumbKey": "2e0fdb64-9957-4262-8e45-f372ba903ac8_image.jpg",
+                  "tags": [
+                    "UX",
+                    "UI"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/portifolios/{id}": {
+      "get": {
+        "tags": [
+          "portfolio"
+        ],
+        "summary": "Find portfolio by ID",
+        "description": "Retrieve portfolio details by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "portfolio123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": {
+                  "portifolio": {
+                    "id": "portfolio123",
+                    "title": "My last project",
+                    "description": "This project was developed with TS and React.",
+                    "link": "https://example.com",
+                    "tags": [
+                      "UX",
+                      "UI"
+                    ],
+                    "createdAt": "2024-01-31T15:05:32.282Z"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "portfolio"
+        ],
+        "summary": "Edit portfolio by ID",
+        "description": "You can edit a portfolio using this endpoint, just pass the portfolio ID on param, and the new data in request body.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "portfolio123"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "link": {
+                    "type": "string"
+                  },
+                  "thumbKey": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 2
+                  }
+                },
+                "example": {
+                  "title": "Updated title",
+                  "description": "New description here.",
+                  "link": "https://example.com",
+                  "thumbKey": "2e0fdb64-9957-4262-8e45-f372ba903ac8_image.jpg",
+                  "tags": [
+                    "UX",
+                    "Web"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "portfolio"
+        ],
+        "summary": "Delete portfolio by ID",
+        "description": "Be careful, with this endpoint you can delete a user's portfolio!",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
