@@ -6,5 +6,5 @@ const allowedOrigins = [
 ]
 
 export const options: CorsOptions = {
-  origin: allowedOrigins,
+  origin: 'http://localhost:3000',
 }
