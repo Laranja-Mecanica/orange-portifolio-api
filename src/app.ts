@@ -10,7 +10,6 @@ import { deletePortifolio } from './http/controllers/portifolios/delete-portifol
 import { authenticate } from './http/controllers/users/authenticate-controller'
 import { getUserProfileById } from './http/controllers/users/get-user-profile-by-id-controller'
 import { register } from './http/controllers/users/register-controller'
-import { options } from './http/cors/cors.config'
 import { authorize } from './http/midllewares/authenticate'
 
 import { env } from '@/env'
@@ -24,7 +23,7 @@ import './http/oauth/google-strategy'
 export const app = express()
 
 app.use(express.json())
-app.use(cors(options))
+app.use(cors())
 
 app.post('/register', register)
 app.post('/session', authenticate)
