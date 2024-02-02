@@ -9,6 +9,7 @@ interface EditPortifolioUseCaseRequest {
   description: string
   link: string
   userId: string
+  thumbKey: string
   tags: string[]
 }
 
@@ -26,6 +27,7 @@ export class EditPortifolioUseCase {
     description,
     link,
     tags,
+    thumbKey,
     userId,
   }: EditPortifolioUseCaseRequest): Promise<EditPortifolioUseCaseResponse> {
     const portifolio = await this.portifoliosRepository.findById(portifolioId)
@@ -42,6 +44,7 @@ export class EditPortifolioUseCase {
     portifolio.description = description
     portifolio.link = link
     portifolio.tags = tags
+    portifolio.thumbKey = thumbKey
 
     await this.portifoliosRepository.save(portifolio)
 
