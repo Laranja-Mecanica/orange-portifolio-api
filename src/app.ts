@@ -18,12 +18,13 @@ import passport from 'passport'
 import swaggerUi from 'swagger-ui-express'
 
 import swaggerDoc from '../docs/swagger-api-doc.json'
+import { options } from './http/cors/cors.config'
 import './http/oauth/google-strategy'
 
 export const app = express()
 
 app.use(express.json())
-app.use(cors())
+app.use(cors(options))
 
 app.post('/register', register)
 app.post('/session', authenticate)
