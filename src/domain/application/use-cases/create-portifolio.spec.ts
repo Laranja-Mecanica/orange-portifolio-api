@@ -17,6 +17,7 @@ describe('Create Portifolio Use Case', () => {
       description: 'Nice description here...',
       link: 'random-link',
       tags: ['tag-01', 'tag-02'],
+      thumbKey: 'thumb-file-key.jpeg',
     })
 
     expect(result.isRight()).toBe(true)

@@ -8,6 +8,7 @@ interface CreatePortifolioUseCaseRequest {
   title: string
   link: string
   description: string
+  thumbKey: string
   tags: string[]
 }
 
@@ -27,12 +28,14 @@ export class CreatePortifolioUseCase {
     link,
     description,
     tags,
+    thumbKey,
   }: CreatePortifolioUseCaseRequest): Promise<CreatePortifolioUseCaseReponse> {
     const portifolio = Portifolio.create({
       userId: new UniqueEntityID(userId),
       title,
       description,
       link,
+      thumbKey,
       tags,
     })
 

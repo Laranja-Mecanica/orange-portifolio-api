@@ -273,6 +273,9 @@
                   "link": {
                     "type": "string"
                   },
+                  "thumbKey": {
+                    "type": "string"
+                  },
                   "tags": {
                     "type": "array",
                     "items": {
@@ -285,6 +288,7 @@
                   "title": "My last project",
                   "description": "This project was developed with TS and React.",
                   "link": "https://example.com",
+                  "thumbKey": "2e0fdb64-9957-4262-8e45-f372ba903ac8_image.jpg",
                   "tags": [
                     "UX",
                     "UI"
@@ -400,6 +404,9 @@
                   "link": {
                     "type": "string"
                   },
+                  "thumbKey": {
+                    "type": "string"
+                  },
                   "tags": {
                     "type": "array",
                     "items": {
@@ -412,6 +419,7 @@
                   "title": "Updated title",
                   "description": "New description here.",
                   "link": "https://example.com",
+                  "thumbKey": "2e0fdb64-9957-4262-8e45-f372ba903ac8_image.jpg",
                   "tags": [
                     "UX",
                     "Web"

@@ -11,6 +11,7 @@ export class PrismaPortifolioMapper {
         description: raw.description,
         link: raw.link,
         tags: raw.tags,
+        thumbKey: raw.thumbKey,
         createdAt: raw.createdAt,
       },
       new UniqueEntityID(raw.id),
@@ -26,6 +27,7 @@ export class PrismaPortifolioMapper {
       description: portifolio.description,
       link: portifolio.link,
       tags: portifolio.tags,
+      thumbKey: portifolio.thumbKey,
       userId: portifolio.userId.toString(),
       createdAt: portifolio.createdAt,
     }
