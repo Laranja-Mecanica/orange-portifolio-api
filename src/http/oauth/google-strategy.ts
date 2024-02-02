@@ -12,15 +12,15 @@ passport.use(
       clientSecret: env.GOOGLE_CLIENT_SECRET,
       callbackURL: 'http://localhost:3333/oauth2/redirect/google',
     },
-    (access_token, refresh_token, profile, done) => {
-      const user = prisma.user.findFirst({
+    async (access_token, refresh_token, profile, done) => {
+      const user = await prisma.user.findFirst({
         where: {
           googleId: profile.id,
         },
       })
 
       if (!user) {
-        const newUser = prisma.user.create({
+        const newUser = await prisma.user.create({
           data: {
             name: profile.name?.givenName ? profile.name?.givenName : '',
             lastName: profile.name?.familyName ? profile.name?.familyName : '',
