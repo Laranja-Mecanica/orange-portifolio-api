@@ -12,7 +12,7 @@ export const authorize = async (
   next: NextFunction,
 ) => {
   const { authorization } = req.headers
-  console.log(authorization)
+  console.log(req.tokenGoogle)
 
   if (!authorization) {
     return res.status(401).json({ message: 'Unauthorized' })

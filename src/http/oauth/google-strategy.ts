@@ -31,7 +31,7 @@ passport.use(
           },
         })
         if (newUser) {
-          request.headers.authorization = sign(newUser.id, env.JWT_PVK, {
+          request.tokenGoogle = sign(newUser.id, env.JWT_PVK, {
             expiresIn: '8h',
           })
           done(null, newUser)
