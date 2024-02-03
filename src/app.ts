@@ -41,15 +41,12 @@ app.use(
 )
 
 app.use(passport.authenticate('session'))
-passport.session({
-  pauseStream: true,
-})
+
 app.get(
   '/oauth2/redirect/google',
   passport.authenticate('google', {
     scope: ['profile', 'email'],
     failureRedirect: 'https://orange-portifolio.vercel.app/',
-    authInfo: true,
     successRedirect: 'https://orange-portifolio.vercel.app/home',
   }),
 )

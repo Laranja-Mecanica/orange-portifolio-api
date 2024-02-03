@@ -12,7 +12,7 @@ export const authorize = async (
   next: NextFunction,
 ) => {
   const { authorization } = req.headers
-  console.log(req.user)
+  console.log('aaaaaaaaaaaaaaaaaa')
 
   if (!authorization) {
     return res.status(401).json({ message: 'Unauthorized' })
