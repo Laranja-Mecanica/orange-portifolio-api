@@ -1,7 +1,8 @@
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { makeEditPortifolioUseCase } from '@/domain/application/use-cases/factories/make-edit-portifolio-use-case'
 import { Request, Response } from 'express'
-import { z } from 'zod'
+import { ZodError, z } from 'zod'
+import { fromZodError } from 'zod-validation-error'
 
 export const editPortifolio = async (req: Request, res: Response) => {
   const editPortifolioParamsSchema = z.object({
@@ -18,38 +19,58 @@ export const editPortifolio = async (req: Request, res: Response) => {
 
   const { id } = editPortifolioParamsSchema.parse(req.params)
 
-  const { title, description, link, tags, thumbKey } =
-    editPortifolioBodySchema.parse(req.body)
+  try {
+    const { title, description, link, tags, thumbKey } =
+      editPortifolioBodySchema.parse(req.body)
 
-  const userId = req.payload?.tokenPayload.sub
+    const userId = req.payload?.tokenPayload.sub
 
-  if (!userId) {
-    return res.status(401).json({ message: 'Not allowed' })
-  }
-
-  const editportifolioUseCase = makeEditPortifolioUseCase()
-
-  const result = await editportifolioUseCase.execute({
-    portifolioId: id,
-    title,
-    description,
-    link,
-    tags,
-    thumbKey,
-    userId,
-  })
-
-  if (result.isLeft()) {
-    const error = result.value
-
-    switch (error.constructor) {
-      case ResourceNotFoundError:
-        return res.status(404).json({ message: error.message })
-
-      default:
-        return res.status(500).json({ message: 'Internal server error' })
+    if (!userId) {
+      return res.status(401).json({ message: 'Not allowed' })
     }
-  }
 
-  return res.status(204).json({})
+    const editportifolioUseCase = makeEditPortifolioUseCase()
+
+    const result = await editportifolioUseCase.execute({
+      portifolioId: id,
+      title,
+      description,
+      link,
+      tags,
+      thumbKey,
+      userId,
+    })
+
+    if (result.isLeft()) {
+      const error = result.value
+
+      switch (error.constructor) {
+        case ResourceNotFoundError:
+          return res.status(404).json({
+            statusCode: 404,
+            message: error.message,
+          })
+        default:
+          return res.status(500).json({
+            statusCode: 500,
+            message: 'Internal server error',
+          })
+      }
+    }
+
+    return res.status(204).json({})
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return res.status(400).json({
+        message: 'Validation failed',
+        statusCode: 400,
+        errors: fromZodError(error).toString(),
+      })
+    }
+
+    return res.status(500).json({
+      statusCode: 500,
+      message: 'Internal server error',
+    })
+  }
 }

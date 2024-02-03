@@ -1,7 +1,8 @@
 import { WrongCredentialsError } from '@/domain/application/use-cases/errors/wrong-credentials-error'
 import { makeAuthenticateUseCase } from '@/domain/application/use-cases/factories/make-authenticate-use-case'
 import { Request, Response } from 'express'
-import { z } from 'zod'
+import { ZodError, z } from 'zod'
+import { fromZodError } from 'zod-validation-error'
 
 export const authenticate = async (req: Request, res: Response) => {
   const authenticateBodySchema = z.object({
@@ -9,28 +10,49 @@ export const authenticate = async (req: Request, res: Response) => {
     password: z.string().min(6),
   })
 
-  const { email, password } = authenticateBodySchema.parse(req.body)
+  try {
+    const { email, password } = authenticateBodySchema.parse(req.body)
 
-  const authenticateUseCase = makeAuthenticateUseCase()
+    const authenticateUseCase = makeAuthenticateUseCase()
 
-  const result = await authenticateUseCase.execute({
-    email,
-    password,
-  })
+    const result = await authenticateUseCase.execute({
+      email,
+      password,
+    })
 
-  if (result.isLeft()) {
-    const error = result.value
+    if (result.isLeft()) {
+      const error = result.value
 
-    switch (error.constructor) {
-      case WrongCredentialsError:
-        return res.status(401).json({ message: error.message })
+      switch (error.constructor) {
+        case WrongCredentialsError:
+          return res.status(401).json({
+            statusCode: 401,
+            message: error.message,
+          })
 
-      default:
-        return res.status(500).json({ message: 'Internal server error' })
+        default:
+          return res.status(500).json({
+            statusCode: 500,
+            message: 'Internal server error',
+          })
+      }
     }
+
+    const { accessToken } = result.value
+
+    return res.status(200).json({ accessToken })
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return res.status(400).json({
+        message: 'Validation failed',
+        statusCode: 400,
+        errors: fromZodError(error).toString(),
+      })
+    }
+
+    return res.status(500).json({
+      statusCode: 500,
+      message: 'Internal server error',
+    })
   }
-
-  const { accessToken } = result.value
-
-  return res.status(200).json({ accessToken })
 }
