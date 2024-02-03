@@ -7,7 +7,6 @@ declare global {
   namespace Express {
     export interface Request {
       payload?: jwt
-      tokenGoogle?: string
     }
   }
 }
