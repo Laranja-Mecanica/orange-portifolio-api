@@ -32,11 +32,11 @@ passport.use(
         if (newUser) {
           console.log(newUser)
           request.user = newUser
-          return done(null, newUser, access_token)
+          done(null, newUser, access_token)
         }
       } else {
         request.user = user
-        return done(null, user, access_token)
+        done(null, user, access_token)
       }
     },
   ),
