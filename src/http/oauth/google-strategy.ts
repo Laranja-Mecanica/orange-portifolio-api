@@ -11,15 +11,15 @@ passport.use(
       clientID: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
       callbackURL:
-        'https://orange-app-2m9ib.ondigitalocean.app/oauth2/redirect/google',
+        'https://orange-app-2m9ib.ondigitalocean.app/auth/google/callback',
+      passReqToCallback: true,
     },
-    async (access_token, refresh_token, profile, done) => {
+    async (request, access_token, refresh_token, profile, done) => {
       const user = await prisma.user.findFirst({
         where: {
           googleId: profile.id,
         },
       })
-
       if (!user) {
         const newUser = await prisma.user.create({
           data: {
@@ -29,11 +29,12 @@ passport.use(
             googleId: profile.id,
           },
         })
-
         if (newUser) {
           done(null, newUser)
         }
       } else {
+        console.log(user)
+
         done(null, user)
       }
     },
@@ -44,6 +45,6 @@ passport.serializeUser(function (user, done) {
   done(null, user)
 })
 
-passport.deserializeUser(function (user, done) {
-  done(null, false)
+passport.deserializeUser(function (user: Express.User, done) {
+  done(null, user)
 })

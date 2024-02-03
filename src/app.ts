@@ -29,24 +29,25 @@ app.use(cors(options))
 app.post('/register', register)
 app.post('/session', authenticate)
 
-app.use(passport.initialize())
-
 app.use(
   session({
     secret: env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
-    cookie: { secure: true, signed: true },
+    saveUninitialized: true,
   }),
 )
-
-app.use(passport.authenticate('session'))
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.get(
-  '/oauth2/redirect/google',
+  '/auth/google',
+  passport.authenticate('google', { scope: ['email', 'profile'] }),
+)
+
+app.get(
+  '/auth/google/callback',
   passport.authenticate('google', {
-    scope: ['profile', 'email'],
-    successRedirect: 'https://orange-portifolio.vercel.app/home',
+    successRedirect: 'https://orange-portifolio.vercel.app/user',
     failureRedirect: 'https://orange-portifolio.vercel.app/',
   }),
 )
