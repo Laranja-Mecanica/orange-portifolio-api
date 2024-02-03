@@ -29,8 +29,6 @@ app.use(cors(options))
 app.post('/register', register)
 app.post('/session', authenticate)
 
-app.use(passport.initialize())
-
 app.use(
   session({
     secret: env.SESSION_SECRET,
@@ -39,9 +37,9 @@ app.use(
     cookie: { secure: true },
   }),
 )
-app.use(passport.session())
 
-app.use(passport.authenticate('session'))
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.get(
   '/oauth2/redirect/google',
