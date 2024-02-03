@@ -1,4 +1,5 @@
 import { env } from '@/env'
+import { sign } from 'jsonwebtoken'
 import passport from 'passport'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { getPrisma } from '../prisma/prisma'
@@ -30,14 +31,15 @@ passport.use(
           },
         })
         if (newUser) {
-          console.log(newUser)
-          request.user = newUser
+          request.headers.authorization = sign(newUser.id, env.JWT_PVK, {
+            expiresIn: '8h',
+          })
           done(null, newUser)
         }
       } else {
-        // console.log(user)
-        request.user = user
-        // console.log(request.user)
+        request.headers.authorization = sign(user.id, env.JWT_PVK, {
+          expiresIn: '8h',
+        })
 
         done(null, user)
       }
