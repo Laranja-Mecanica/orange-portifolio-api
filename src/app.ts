@@ -39,11 +39,7 @@ app.use(
     cookie: { secure: true },
   }),
 )
-app.use(
-  passport.session({
-    pauseStream: true,
-  }),
-)
+app.use(passport.session())
 
 app.use(passport.authenticate('session'))
 
