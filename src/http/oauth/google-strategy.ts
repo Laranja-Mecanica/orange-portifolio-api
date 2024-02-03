@@ -29,11 +29,12 @@ passport.use(
             googleId: profile.id,
           },
         })
-
         if (newUser) {
+          console.log(newUser)
           return done(null, newUser, access_token)
         }
       } else {
+        console.log(user)
         return done(null, user, access_token)
       }
     },
