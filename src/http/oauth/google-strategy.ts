@@ -33,6 +33,8 @@ passport.use(
           done(null, newUser)
         }
       } else {
+        console.log(user)
+
         done(null, user)
       }
     },
