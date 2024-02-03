@@ -12,8 +12,9 @@ passport.use(
       clientSecret: env.GOOGLE_CLIENT_SECRET,
       callbackURL:
         'https://orange-app-2m9ib.ondigitalocean.app/oauth2/redirect/google',
+      passReqToCallback: true,
     },
-    async (access_token, refresh_token, profile, done) => {
+    async (request, access_token, refresh_token, profile, done) => {
       const user = await prisma.user.findFirst({
         where: {
           googleId: profile.id,
@@ -30,10 +31,10 @@ passport.use(
         })
 
         if (newUser) {
-          done(null, newUser, access_token)
+          return done(null, newUser, access_token)
         }
       } else {
-        done(null, user, access_token)
+        return done(null, user, access_token)
       }
     },
   ),
