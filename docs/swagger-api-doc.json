@@ -55,7 +55,14 @@
                   "password": {
                     "type": "string"
                   }
-                }
+                },
+                "required": [
+                  "name",
+                  "lastName",
+                  "country",
+                  "email",
+                  "password"
+                ]
               },
               "example": {
                 "name": "John",
@@ -100,7 +107,11 @@
                   "password": {
                     "type": "string"
                   }
-                }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
               },
               "example": {
                 "email": "johndoe@example.com",
@@ -284,6 +295,13 @@
                     "maxItems": 2
                   }
                 },
+                "required": [
+                  "title",
+                  "description",
+                  "link",
+                  "thumbKey",
+                  "tags"
+                ],
                 "example": {
                   "title": "My last project",
                   "description": "This project was developed with TS and React.",
@@ -307,6 +325,63 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/discover": {
+      "get": {
+        "tags": [
+          "portfolio"
+        ],
+        "summary": "List recent portfolios",
+        "description": "This endpoint list all recent portfolios.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": "portfolio123",
+                    "title": "My last project",
+                    "description": "This project was developed with TS and React.",
+                    "link": "https://example.com",
+                    "tags": [
+                      "UX",
+                      "UI"
+                    ],
+                    "createdAt": "2024-01-31T15:05:32.282Z"
+                  },
+                  {
+                    "id": "portfolio111",
+                    "title": "My 2 project",
+                    "description": "This project was developed with TS and React.",
+                    "link": "https://example.com",
+                    "tags": [
+                      "UX",
+                      "UI"
+                    ],
+                    "createdAt": "2024-01-31T15:05:32.282Z"
+                  }
+                ]
+              }
+            }
           }
         },
         "security": [
@@ -415,6 +490,13 @@
                     "maxItems": 2
                   }
                 },
+                "required": [
+                  "title",
+                  "description",
+                  "link",
+                  "thumbKey",
+                  "tags"
+                ],
                 "example": {
                   "title": "Updated title",
                   "description": "New description here.",
