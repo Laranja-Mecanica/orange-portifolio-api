@@ -36,7 +36,7 @@ app.use(
     secret: env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: true, signed: true },
+    cookie: { secure: true },
   }),
 )
 
@@ -46,9 +46,12 @@ app.get(
   '/oauth2/redirect/google',
   passport.authenticate('google', {
     scope: ['profile', 'email'],
-    successRedirect: 'https://orange-portifolio.vercel.app/home',
     failureRedirect: 'https://orange-portifolio.vercel.app/',
+    successRedirect: 'https://orange-portifolio.vercel.app/home',
   }),
+  (req, res) => {
+    req.isSignIn = true
+  },
 )
 
 app.use(
