@@ -19,7 +19,6 @@ passport.use(
           googleId: profile.id,
         },
       })
-
       if (!user) {
         const newUser = await prisma.user.create({
           data: {
@@ -31,10 +30,10 @@ passport.use(
         })
 
         if (newUser) {
-          done(null, newUser)
+          done(null, newUser, access_token)
         }
       } else {
-        done(null, user)
+        done(null, user, access_token)
       }
     },
   ),
@@ -45,5 +44,5 @@ passport.serializeUser(function (user, done) {
 })
 
 passport.deserializeUser(function (user, done) {
-  done(null, false)
+  done(null)
 })

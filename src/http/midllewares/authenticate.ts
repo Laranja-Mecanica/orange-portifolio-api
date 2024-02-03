@@ -11,24 +11,22 @@ export const authorize = async (
   res: Response,
   next: NextFunction,
 ) => {
-  if (req.isSignIn === true) {
-    next()
-  } else {
-    const { authorization } = req.headers
-    if (!authorization) {
-      return res.status(401).json({ message: 'Unauthorized' })
-    }
+  const { authorization } = req.headers
+  console.log(req.user)
 
-    const token = authorization.split(' ')[1]
-
-    const payload = verify(token, env.JWT_PVK) as JwtPayload
-
-    req.payload = { tokenPayload: payload }
-
-    if (!payload.sub) {
-      return res.status(401).json({ message: 'Unauthorized' })
-    }
-
-    next()
+  if (!authorization) {
+    return res.status(401).json({ message: 'Unauthorized' })
   }
+
+  const token = authorization.split(' ')[1]
+
+  const payload = verify(token, env.JWT_PVK) as JwtPayload
+
+  req.payload = { tokenPayload: payload }
+
+  if (!payload.sub) {
+    return res.status(401).json({ message: 'Unauthorized' })
+  }
+
+  next()
 }
