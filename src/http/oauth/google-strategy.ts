@@ -35,6 +35,7 @@ passport.use(
           done(null, newUser, access_token)
         }
       } else {
+        console.log(user)
         request.user = user
         done(null, user, access_token)
       }
