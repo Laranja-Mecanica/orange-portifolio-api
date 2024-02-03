@@ -18,6 +18,7 @@ import passport from 'passport'
 import swaggerUi from 'swagger-ui-express'
 
 import swaggerDoc from '../docs/swagger-api-doc.json'
+import { fetchRecentPortifolios } from './http/controllers/portifolios/fetch-recent-portfolios-controller'
 import { options } from './http/cors/cors.config'
 import './http/oauth/google-strategy'
 
@@ -67,6 +68,7 @@ app.get('/portifolios/:id', getPortifolioById)
 app.post('/portifolios', createPortifolio)
 app.put('/portifolios/:id', editPortifolio)
 app.delete('/portifolios/:id', deletePortifolio)
+app.get('/discover', fetchRecentPortifolios)
 
 app.get('/users/:id', getUserProfileById)
 app.get('/users/:id/portifolios', fetchUserPortifolio)

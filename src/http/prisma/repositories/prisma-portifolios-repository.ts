@@ -6,11 +6,25 @@ import { PrismaPortifolioMapper } from './mappers/prisma-portifolio-mapper'
 const prisma = getPrisma()
 
 export class PrismaPortifoliosRepository implements PortifoliosRepository {
-  async findManyByUserId(userId: string) {
+  async findManyByUserId(userId: string, page: number) {
     const portifolios = await prisma.portifolio.findMany({
       where: {
         userId,
       },
+      take: 20,
+      skip: (page - 1) * page,
+    })
+
+    return portifolios.map(PrismaPortifolioMapper.toDomain)
+  }
+
+  async findManyRecent(page: number) {
+    const portifolios = await prisma.portifolio.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 20,
+      skip: (page - 1) * page,
     })
 
     return portifolios.map(PrismaPortifolioMapper.toDomain)
