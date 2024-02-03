@@ -27,16 +27,14 @@ export const authorize = async (
 
     const token = authorization.split(' ')[1]
 
-  const token = authorization.split(' ')[1]
+    const payload = verify(token, env.JWT_PVK) as JwtPayload
 
-  const payload = verify(token, env.JWT_PVK) as JwtPayload
+    req.payload = { tokenPayload: payload }
 
-  req.payload = { tokenPayload: payload }
+    if (!payload.sub) {
+      return res.status(401).json({ message: 'Unauthorized' })
+    }
 
-  if (!payload.sub) {
-    return res.status(401).json({ message: 'Unauthorized' })
+    next()
   }
-
-  next()
-  // }
 }
