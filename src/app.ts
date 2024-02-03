@@ -34,24 +34,21 @@ app.use(
     secret: env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true },
   }),
 )
-
 app.use(passport.initialize())
 app.use(passport.session())
 
-// app.get(
-//   '/oauth2/google',
-//   passport.authenticate('google', { scope: ['email', 'profile'] }),
-// )
+app.get(
+  '/auth/google',
+  passport.authenticate('google', { scope: ['email', 'profile'] }),
+)
 
 app.get(
-  '/oauth2/redirect/google',
+  '/auth/google/callback',
   passport.authenticate('google', {
-    scope: ['email', 'profile'],
-    failureRedirect: 'https://orange-portifolio.vercel.app/',
     successRedirect: '/',
+    failureRedirect: '/auth/google/failure',
   }),
 )
 
@@ -68,7 +65,7 @@ app.use(
 app.use(authorize)
 
 app.get('/', (req: Request, res: Response) => {
-  console.log('passou')
+  res.json({ message: 'Passou' })
 })
 
 app.get('/portifolios/:id', getPortifolioById)
