@@ -35,9 +35,9 @@ passport.use(
           done(null, newUser)
         }
       } else {
-        console.log(user)
+        // console.log(user)
         request.user = user
-        console.log(request.user)
+        // console.log(request.user)
 
         done(null, user)
       }
