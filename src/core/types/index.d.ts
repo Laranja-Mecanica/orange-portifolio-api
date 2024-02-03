@@ -7,6 +7,7 @@ declare global {
   namespace Express {
     export interface Request {
       payload?: jwt
+      isSignIn: boolean
     }
   }
 }

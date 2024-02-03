@@ -11,7 +11,7 @@ export const authorize = async (
   res: Response,
   next: NextFunction,
 ) => {
-  if (req.session.cookie.signed === true) {
+  if (req.isSignIn === true) {
     next()
   } else {
     const { authorization } = req.headers
