@@ -12,8 +12,6 @@ import { getUserProfileById } from './http/controllers/users/get-user-profile-by
 import { register } from './http/controllers/users/register-controller'
 import { authorize } from './http/midllewares/authenticate'
 
-import { env } from '@/env'
-import session from 'express-session'
 import passport from 'passport'
 import swaggerUi from 'swagger-ui-express'
 
@@ -30,13 +28,9 @@ app.post('/register', register)
 app.post('/session', authenticate)
 
 app.use(passport.initialize())
-
 app.use(
-  session({
-    secret: env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: true },
+  passport.session({
+    pauseStream: true,
   }),
 )
 

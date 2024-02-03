@@ -30,13 +30,9 @@ passport.use(
         })
 
         if (newUser) {
-          console.log('AAAAAAAAAAAAAAAAAAAAAAAAAa')
-
           done(null, newUser, access_token)
         }
       } else {
-        console.log('AAAAAAAAAAAAAAAAAAAAAAAAAa')
-
         done(null, user, access_token)
       }
     },
