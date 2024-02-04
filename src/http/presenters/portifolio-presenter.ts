@@ -8,6 +8,7 @@ export class PortifolioPresenter {
       description: portifolio.description,
       link: portifolio.link,
       tags: portifolio.tags,
+      thumbUrl: portifolio.thumbKey,
       createdAt: portifolio.createdAt,
     }
   }
