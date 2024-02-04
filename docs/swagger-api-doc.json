@@ -226,6 +226,7 @@
                     "title": "My last project",
                     "description": "This project was developed with TS and React.",
                     "link": "https://example.com",
+                    "thumbLink": "https://example.com",
                     "tags": [
                       "UX",
                       "UI"
@@ -237,6 +238,7 @@
                     "title": "My 2 project",
                     "description": "This project was developed with TS and React.",
                     "link": "https://example.com",
+                    "thumbLink": "https://example.com",
                     "tags": [
                       "UX",
                       "UI"
@@ -362,6 +364,7 @@
                     "title": "My last project",
                     "description": "This project was developed with TS and React.",
                     "link": "https://example.com",
+                    "thumbLink": "https://example.com",
                     "tags": [
                       "UX",
                       "UI"
@@ -373,6 +376,7 @@
                     "title": "My 2 project",
                     "description": "This project was developed with TS and React.",
                     "link": "https://example.com",
+                    "thumbLink": "https://example.com",
                     "tags": [
                       "UX",
                       "UI"
@@ -420,6 +424,7 @@
                     "title": "My last project",
                     "description": "This project was developed with TS and React.",
                     "link": "https://example.com",
+                    "thumbLink": "https://example.com",
                     "tags": [
                       "UX",
                       "UI"
