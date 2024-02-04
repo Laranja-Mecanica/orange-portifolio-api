@@ -1,5 +1,5 @@
 import cors from 'cors'
-import express, { NextFunction, Request, Response } from 'express'
+import express from 'express'
 
 import { editPortifolio } from './http/controllers/portifolios/edit-portifolio-controller'
 import { getPortifolioById } from './http/controllers/portifolios/get-portifolio-by-id-controller'
@@ -27,12 +27,6 @@ export const app = express()
 app.use(express.json())
 app.use(cors(options))
 
-const signUser = (req: Request, res: Response, next: NextFunction) => {
-  if (req.user) {
-    req.user
-  }
-}
-
 app.post('/register', register)
 app.post('/session', authenticate)
 
@@ -51,9 +45,13 @@ app.get(
   passport.authenticate('google', { scope: ['email', 'profile'] }),
 )
 
-app.get('/auth/google/callback', (req: Request, res: Response) => {
-  return res.json(req.user)
-})
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google', {
+    successRedirect: `https://orange-portifolio.vercel.app/`,
+    failureRedirect: 'https://orange-portifolio.vercel.app/',
+  }),
+)
 
 app.use(
   '/docs',
