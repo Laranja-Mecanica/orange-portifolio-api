@@ -30,9 +30,11 @@ passport.use(
           },
         })
         if (newUser) {
+          request.authInfo = newUser
           done(null, newUser)
         }
       } else {
+        request.authInfo = user
         done(null, user)
       }
     },
