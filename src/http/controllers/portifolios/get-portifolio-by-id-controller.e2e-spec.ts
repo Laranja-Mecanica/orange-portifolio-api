@@ -38,6 +38,7 @@ describe('Get Portifolio by Id (E2E)', () => {
       portifolio: expect.objectContaining({
         title: 'Nice project!',
         tags: ['Web', 'Mobile'],
+        userName: user.name,
       }),
     })
   })

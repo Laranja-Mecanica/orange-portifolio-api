@@ -4,7 +4,7 @@ import { PortfolioWithUser } from '@/domain/entities/value-objects/portfolio-wit
 export interface PortifoliosRepository {
   findByIdWithUser(id: string): Promise<PortfolioWithUser | null>
   findManyByUserIdWithUser(
-    id: string,
+    userId: string,
     page: number,
   ): Promise<PortfolioWithUser[]>
   findManyRecentWithUser(page: number): Promise<PortfolioWithUser[]>

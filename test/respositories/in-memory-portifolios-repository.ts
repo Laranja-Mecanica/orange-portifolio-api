@@ -36,9 +36,9 @@ export class InMemoryPortifoliosRepository implements PortifoliosRepository {
     })
   }
 
-  async findManyByUserIdWithUser(id: string, page: number) {
+  async findManyByUserIdWithUser(userId: string, page: number) {
     const portifolios = this.items
-      .filter((item) => item.userId.toString() === id)
+      .filter((item) => item.userId.toString() === userId)
       .slice((page - 1) * 20, page * 20)
       .map((portifolio) => {
         const user = this.usersRepository.items.find(
