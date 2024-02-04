@@ -65,7 +65,7 @@ app.use(
 )
 
 app.get('/teste', (req: Request, res: Response) => {
-  const token = sign(req.sessionID, env.JWT_PVK, { expiresIn: '8h' })
+  const token = sign(req.user.id, env.JWT_PVK, { expiresIn: '8h' })
   const payload = verify(token, env.JWT_PVK) as JwtPayload
 
   req.payload = { tokenPayload: payload }
