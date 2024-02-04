@@ -2,6 +2,7 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { ValueObject } from '@/core/entities/value-object'
 
 interface PortfolioWithUserProps {
+  portfolioId: UniqueEntityID
   userId: UniqueEntityID
   userName: string
   userLastName: string
@@ -14,6 +15,10 @@ interface PortfolioWithUserProps {
 }
 
 export class PortfolioWithUser extends ValueObject<PortfolioWithUserProps> {
+  get portfolioId() {
+    return this.props.portfolioId
+  }
+
   get userId() {
     return this.props.userId
   }

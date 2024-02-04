@@ -12,6 +12,7 @@ type PrismaPortfolioWithUser = PrismaPortfolio & {
 export class PrismaPortfolioWithUserMapper {
   static toDomain(raw: PrismaPortfolioWithUser): PortfolioWithUser {
     return PortfolioWithUser.create({
+      portfolioId: new UniqueEntityID(raw.id),
       userId: new UniqueEntityID(raw.userId),
       userName: raw.user.name,
       userLastName: raw.user.lastName,

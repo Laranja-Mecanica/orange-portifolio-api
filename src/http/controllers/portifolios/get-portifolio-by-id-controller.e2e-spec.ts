@@ -39,6 +39,7 @@ describe('Get Portifolio by Id (E2E)', () => {
         title: 'Nice project!',
         tags: ['Web', 'Mobile'],
         userName: user.name,
+        portfolioId: portifolioId,
       }),
     })
   })

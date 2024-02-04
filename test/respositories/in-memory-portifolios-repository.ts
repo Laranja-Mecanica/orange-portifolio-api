@@ -24,6 +24,7 @@ export class InMemoryPortifoliosRepository implements PortifoliosRepository {
     }
 
     return PortfolioWithUser.create({
+      portfolioId: portifolio.id,
       userId: portifolio.userId,
       userName: user.name,
       userLastName: user.lastName,
@@ -52,6 +53,7 @@ export class InMemoryPortifoliosRepository implements PortifoliosRepository {
         }
 
         return PortfolioWithUser.create({
+          portfolioId: portifolio.id,
           userId: portifolio.userId,
           userName: user.name,
           userLastName: user.lastName,
@@ -83,6 +85,7 @@ export class InMemoryPortifoliosRepository implements PortifoliosRepository {
         }
 
         return PortfolioWithUser.create({
+          portfolioId: portifolio.id,
           userId: portifolio.userId,
           userName: user.name,
           userLastName: user.lastName,
