@@ -1,5 +1,5 @@
 import { Either, right } from '@/core/either'
-import { Portifolio } from '@/domain/entities/portifolio'
+import { PortfolioWithUser } from '@/domain/entities/value-objects/portfolio-with-user'
 import { PortifoliosRepository } from '../repositories/portifolios-repository'
 
 interface FetchRecentPortifoslioUseCaseRequest {
@@ -9,7 +9,7 @@ interface FetchRecentPortifoslioUseCaseRequest {
 type FetchRecentPortifoliosUseCaseResponse = Either<
   null,
   {
-    portifolios: Portifolio[]
+    portifolios: PortfolioWithUser[]
   }
 >
 
@@ -19,7 +19,8 @@ export class FetchRecentPortifolioUseCase {
   async execute({
     page,
   }: FetchRecentPortifoslioUseCaseRequest): Promise<FetchRecentPortifoliosUseCaseResponse> {
-    const portifolios = await this.portifolioRepository.findManyRecent(page)
+    const portifolios =
+      await this.portifolioRepository.findManyRecentWithUser(page)
 
     return right({ portifolios })
   }
