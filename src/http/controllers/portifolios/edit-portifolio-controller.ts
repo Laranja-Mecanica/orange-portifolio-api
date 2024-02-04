@@ -6,20 +6,20 @@ import { fromZodError } from 'zod-validation-error'
 
 export const editPortifolio = async (req: Request, res: Response) => {
   const editPortifolioParamsSchema = z.object({
-    id: z.string(),
+    id: z.string().uuid(),
   })
 
   const editPortifolioBodySchema = z.object({
-    title: z.string(),
-    description: z.string(),
-    link: z.string(),
-    thumbKey: z.string(),
+    title: z.string().max(25),
+    description: z.string().max(120),
+    link: z.string().url(),
+    thumbKey: z.string().url(),
     tags: z.array(z.enum(['UX', 'UI', 'Web', 'Mobile'])).length(2),
   })
 
-  const { id } = editPortifolioParamsSchema.parse(req.params)
-
   try {
+    const { id } = editPortifolioParamsSchema.parse(req.params)
+
     const { title, description, link, tags, thumbKey } =
       editPortifolioBodySchema.parse(req.body)
 

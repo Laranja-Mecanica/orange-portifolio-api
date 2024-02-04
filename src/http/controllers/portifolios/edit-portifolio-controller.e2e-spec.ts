@@ -33,8 +33,8 @@ describe('Edit Portifolio (E2E)', () => {
       .send({
         title: 'Updated title',
         description: 'Updated description',
-        link: 'updatedlink.com',
-        thumbKey: 'random-thumb-key.jpeg',
+        link: 'https://updatedlink.com',
+        thumbKey: 'https://random-thumb-key.com',
         tags: ['UI', 'Web'],
       })
 
@@ -48,8 +48,8 @@ describe('Edit Portifolio (E2E)', () => {
       expect.objectContaining({
         title: 'Updated title',
         description: 'Updated description',
-        link: 'updatedlink.com',
-        thumbKey: 'random-thumb-key.jpeg',
+        link: 'https://updatedlink.com',
+        thumbKey: 'https://random-thumb-key.com',
         tags: ['UI', 'Web'],
       }),
     )

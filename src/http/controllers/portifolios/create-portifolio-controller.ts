@@ -5,10 +5,10 @@ import { fromZodError } from 'zod-validation-error'
 
 export const createPortifolio = async (req: Request, res: Response) => {
   const createPortifolioBodySchema = z.object({
-    title: z.string(),
-    description: z.string(),
-    link: z.string(),
-    thumbKey: z.string(),
+    title: z.string().max(25),
+    description: z.string().max(120),
+    link: z.string().url(),
+    thumbKey: z.string().url(),
     tags: z.array(z.enum(['UX', 'UI', 'Web', 'Mobile'])).length(2),
   })
 

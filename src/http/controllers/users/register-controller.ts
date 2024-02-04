@@ -6,11 +6,43 @@ import { fromZodError } from 'zod-validation-error'
 
 export const register = async (req: Request, res: Response) => {
   const registerBodySchema = z.object({
-    name: z.string(),
-    lastName: z.string(),
-    country: z.string(),
+    name: z
+      .string()
+      .max(25)
+      .regex(/^(?!\s*$)[a-zA-Z\s]+$/, {
+        message:
+          'The name cannot be just spaces and must contain only letters and spaces',
+      }),
+    lastName: z
+      .string()
+      .max(25)
+      .regex(/^(?!\s*$)[a-zA-Z\s]+$/, {
+        message:
+          'The name cannot be just spaces and must contain only letters and spaces',
+      }),
+    country: z
+      .string()
+      .max(25)
+      .regex(/^(?!\s*$)[a-zA-Z\s]+$/, {
+        message:
+          'The name cannot be just spaces and must contain only letters and spaces',
+      }),
     email: z.string().email(),
-    password: z.string().min(6),
+    password: z
+      .string()
+      .min(6)
+      .max(25)
+      .regex(/[a-z]/, {
+        message: 'Password must contain at least one lowercase letter',
+      })
+      .regex(/[A-Z]/, {
+        message: 'Password must contain at least one uppercase letter',
+      })
+      .regex(/[0-9]/, { message: 'Password must contain at least one number' })
+      .regex(/[^A-Za-z0-9]/, {
+        message: 'Password must contain at least one special character',
+      })
+      .regex(/^\S*$/, { message: 'Password must not contain spaces' }),
   })
 
   try {

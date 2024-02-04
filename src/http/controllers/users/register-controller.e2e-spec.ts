@@ -20,7 +20,7 @@ describe('Register (E2E)', () => {
       lastName: 'Doe',
       country: 'Greece',
       email: 'johndoe@example.com',
-      password: '123456',
+      password: 'randomPassword@123',
     })
 
     expect(response.statusCode).toBe(201)

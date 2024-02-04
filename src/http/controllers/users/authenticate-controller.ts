@@ -6,8 +6,8 @@ import { fromZodError } from 'zod-validation-error'
 
 export const authenticate = async (req: Request, res: Response) => {
   const authenticateBodySchema = z.object({
-    email: z.string(),
-    password: z.string().min(6),
+    email: z.string().email(),
+    password: z.string().min(6).max(25),
   })
 
   try {

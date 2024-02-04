@@ -27,7 +27,7 @@ describe('Create Portifolio (E2E)', () => {
         title: 'My last project',
         description: 'This project was developed with TS and React.',
         link: 'https://example.com',
-        thumbKey: 'thumb-key-random.jpeg',
+        thumbKey: 'https://thumurl.com',
         tags: ['UX', 'UI'],
       })
       .set('Authorization', `Bearer ${token}`)
