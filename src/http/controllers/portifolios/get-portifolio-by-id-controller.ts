@@ -1,6 +1,6 @@
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { makeGetPortifolioByIdUseCase } from '@/domain/application/use-cases/factories/make-get-portifolio-by-id-use-case'
-import { PortifolioPresenter } from '@/http/presenters/portifolio-presenter'
+import { PortifolioWithUserPresenter } from '@/http/presenters/portfolio-with-user-presenter'
 import { Request, Response } from 'express'
 import { z } from 'zod'
 
@@ -33,5 +33,5 @@ export const getPortifolioById = async (req: Request, res: Response) => {
 
   return res
     .status(200)
-    .json({ portifolio: PortifolioPresenter.toHTTP(portifolio) })
+    .json({ portifolio: PortifolioWithUserPresenter.toHTTP(portifolio) })
 }

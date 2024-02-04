@@ -1,7 +1,7 @@
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { PortifoliosRepository } from '@/domain/application/repositories/portifolios-repository'
-import { Portifolio } from '@/domain/entities/portifolio'
+import { PortfolioWithUser } from '@/domain/entities/value-objects/portfolio-with-user'
 
 interface GetPortifolioByIdUseCaseRequest {
   id: string
@@ -10,7 +10,7 @@ interface GetPortifolioByIdUseCaseRequest {
 type GetPortifolioByIdUseCaseResponse = Either<
   ResourceNotFoundError,
   {
-    portifolio: Portifolio
+    portifolio: PortfolioWithUser
   }
 >
 
@@ -20,7 +20,7 @@ export class GetPortifolioByIdUseCase {
   async execute({
     id,
   }: GetPortifolioByIdUseCaseRequest): Promise<GetPortifolioByIdUseCaseResponse> {
-    const portifolio = await this.portifoliosRepository.findById(id)
+    const portifolio = await this.portifoliosRepository.findByIdWithUser(id)
 
     if (!portifolio) {
       return left(new ResourceNotFoundError())

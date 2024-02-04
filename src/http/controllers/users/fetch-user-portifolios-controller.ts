@@ -1,5 +1,5 @@
 import { makeFetchPortifolioUseCase } from '@/domain/application/use-cases/factories/make-fetch-user-portifolios'
-import { PortifolioPresenter } from '@/http/presenters/portifolio-presenter'
+import { PortifolioWithUserPresenter } from '@/http/presenters/portfolio-with-user-presenter'
 import { Request, Response } from 'express'
 import { z } from 'zod'
 
@@ -35,6 +35,6 @@ export const fetchUserPortifolio = async (req: Request, res: Response) => {
   const { portifolios } = result.value
 
   return res.status(200).json({
-    portifolios: portifolios.map(PortifolioPresenter.toHTTP),
+    portifolios: portifolios.map(PortifolioWithUserPresenter.toHTTP),
   })
 }
