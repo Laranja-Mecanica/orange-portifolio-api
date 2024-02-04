@@ -12,7 +12,6 @@ export const authorize = async (
   next: NextFunction,
 ) => {
   const { authorization } = req.headers
-  console.log(req.user)
 
   if (req.user) {
     const token = sign(req.sessionID, env.JWT_PVK, { expiresIn: '8h' })
