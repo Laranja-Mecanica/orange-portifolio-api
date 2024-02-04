@@ -47,16 +47,10 @@ app.get(
 
 app.get(
   '/auth/google/callback',
-  passport.authenticate(
-    'google',
-    {
-      successRedirect: 'https://orange-portifolio.vercel.app/user',
-      failureRedirect: 'https://orange-portifolio.vercel.app/',
-    },
-    (req: Request, res: Response) => {
-      return res.json({ message: 'okok' })
-    },
-  ),
+  passport.authenticate('google', {
+    successRedirect: '/teste',
+    failureRedirect: 'https://orange-portifolio.vercel.app/',
+  }),
 )
 
 app.use(
@@ -70,6 +64,10 @@ app.use(
 )
 
 app.use(authorize)
+
+app.get('/teste', (req: Request, res: Response) => {
+  res.redirect('https://orange-portifolio.vercel.app/user')
+})
 
 app.get('/portifolios/:id', getPortifolioById)
 app.post('/portifolios', createPortifolio)
