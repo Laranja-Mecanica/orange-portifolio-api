@@ -48,7 +48,7 @@ app.get(
 app.get(
   '/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: '/teste',
+    successRedirect: 'https://orange-portifolio.vercel.app/home',
     failureRedirect: 'https://orange-portifolio.vercel.app/',
   }),
 )
