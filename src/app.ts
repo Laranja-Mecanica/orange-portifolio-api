@@ -66,7 +66,7 @@ app.use(
 app.use(authorize)
 
 app.get('/teste', (req: Request, res: Response) => {
-  res.redirect('https://orange-portifolio.vercel.app/user')
+  console.log(req.payload?.tokenPayload)
 })
 
 app.get('/portifolios/:id', getPortifolioById)
