@@ -1,5 +1,5 @@
 import cors from 'cors'
-import express, { Request, Response } from 'express'
+import express from 'express'
 
 import { editPortifolio } from './http/controllers/portifolios/edit-portifolio-controller'
 import { getPortifolioById } from './http/controllers/portifolios/get-portifolio-by-id-controller'
@@ -17,7 +17,6 @@ import session from 'express-session'
 import passport from 'passport'
 import swaggerUi from 'swagger-ui-express'
 
-import { JwtPayload, sign, verify } from 'jsonwebtoken'
 import swaggerDoc from '../docs/swagger-api-doc.json'
 import { fetchRecentPortifolios } from './http/controllers/portifolios/fetch-recent-portfolios-controller'
 import { options } from './http/cors/cors.config'
@@ -49,7 +48,7 @@ app.get(
 app.get(
   '/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: 'https://orange-app-2m9ib.ondigitalocean.app/teste',
+    successRedirect: 'https://orange-portifolio.vercel.app/home',
     failureRedirect: 'https://orange-portifolio.vercel.app/',
   }),
 )
@@ -63,15 +62,6 @@ app.use(
     },
   }),
 )
-
-app.get('/teste', (req: Request, res: Response) => {
-  const token = sign(req.user.id, env.JWT_PVK, { expiresIn: '8h' })
-  const payload = verify(token, env.JWT_PVK) as JwtPayload
-
-  req.payload = { tokenPayload: payload }
-
-  res.redirect('https://orange-portifolio.vercel.app/')
-})
 
 app.use(authorize)
 
