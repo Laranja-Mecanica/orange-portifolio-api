@@ -17,6 +17,7 @@ import session from 'express-session'
 import passport from 'passport'
 import swaggerUi from 'swagger-ui-express'
 
+import { JwtPayload, sign, verify } from 'jsonwebtoken'
 import swaggerDoc from '../docs/swagger-api-doc.json'
 import { fetchRecentPortifolios } from './http/controllers/portifolios/fetch-recent-portfolios-controller'
 import { options } from './http/cors/cors.config'
@@ -64,7 +65,12 @@ app.use(
 )
 
 app.get('/teste', (req: Request, res: Response) => {
-  return res.json(req.user)
+  const token = sign(req.sessionID, env.JWT_PVK, { expiresIn: '8h' })
+  const payload = verify(token, env.JWT_PVK) as JwtPayload
+
+  req.payload = { tokenPayload: payload }
+
+  res.redirect('https://orange-portifolio.vercel.app/')
 })
 
 app.use(authorize)
