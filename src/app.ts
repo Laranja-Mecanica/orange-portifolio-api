@@ -63,11 +63,11 @@ app.use(
   }),
 )
 
-app.use(authorize)
-
 app.get('/teste', (req: Request, res: Response) => {
-  console.log(req.payload?.tokenPayload)
+  return res.json(req.user)
 })
+
+app.use(authorize)
 
 app.get('/portifolios/:id', getPortifolioById)
 app.post('/portifolios', createPortifolio)
