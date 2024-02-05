@@ -53,7 +53,7 @@ app.get(
       failureRedirect: 'https://orange-portifolio.vercel.app/',
     },
     (req: Request, res: Response) => {
-      res.status(200).json({ token: req.user })
+      res.cookie('token', req.user, { maxAge: 900000, httpOnly: true })
       res.redirect('https://orange-portifolio.vercel.app/')
     },
   ),
