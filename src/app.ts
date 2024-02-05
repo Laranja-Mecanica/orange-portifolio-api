@@ -47,11 +47,10 @@ app.get(
 
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google', {
-    successRedirect: 'https://orange-portifolio.vercel.app/',
-  }),
+  passport.authenticate('google'),
   (req: Request, res: Response) => {
-    res.json(req.user)
+    res.cookie('token', req.user, { secure: true, httpOnly: true })
+    res.redirect('https://orange-portifolio.vercel.app/')
   },
 )
 
