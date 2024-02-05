@@ -33,7 +33,7 @@ app.post('/session', authenticate)
 app.use(
   session({
     secret: env.SESSION_SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
   }),
 )
@@ -47,10 +47,15 @@ app.get(
 
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google', {
-    successRedirect: `/getInfo`,
-    failureRedirect: 'https://orange-portifolio.vercel.app/',
-  }),
+  passport.authenticate(
+    'google',
+    {
+      failureRedirect: 'https://orange-portifolio.vercel.app/',
+    },
+    (req: Request, res: Response) => {
+      return res.status(200).json({ token: req.user })
+    },
+  ),
 )
 
 app.use(
@@ -63,9 +68,9 @@ app.use(
   }),
 )
 
-app.use('/getInfo', (req: Request, res: Response) => {
-  return res.status(200).json({ token: req.user })
-})
+// app.use('/getInfo', (req: Request, res: Response) => {
+//   return res.status(200).json({ token: req.user })
+// })
 
 app.use(authorize)
 
