@@ -222,7 +222,7 @@
               "application/json": {
                 "example": [
                   {
-                    "id": "portfolio123",
+                    "portfolioId": "portfolio123",
                     "title": "My last project",
                     "description": "This project was developed with TS and React.",
                     "link": "https://example.com",
@@ -231,10 +231,12 @@
                       "UX",
                       "UI"
                     ],
-                    "createdAt": "2024-01-31T15:05:32.282Z"
+                    "createdAt": "2024-01-31T15:05:32.282Z",
+                    "userName": "John",
+                    "lastName": "Doe"
                   },
                   {
-                    "id": "portfolio111",
+                    "portfolioId": "portfolio123",
                     "title": "My 2 project",
                     "description": "This project was developed with TS and React.",
                     "link": "https://example.com",
@@ -243,7 +245,9 @@
                       "UX",
                       "UI"
                     ],
-                    "createdAt": "2024-01-31T15:05:32.282Z"
+                    "createdAt": "2024-01-31T15:05:32.282Z",
+                    "userName": "John",
+                    "lastName": "Doe"
                   }
                 ]
               }
@@ -360,7 +364,7 @@
               "application/json": {
                 "example": [
                   {
-                    "id": "portfolio123",
+                    "portfolioId": "portfolio123",
                     "title": "My last project",
                     "description": "This project was developed with TS and React.",
                     "link": "https://example.com",
@@ -369,10 +373,12 @@
                       "UX",
                       "UI"
                     ],
-                    "createdAt": "2024-01-31T15:05:32.282Z"
+                    "createdAt": "2024-01-31T15:05:32.282Z",
+                    "userName": "John",
+                    "lastName": "Doe"
                   },
                   {
-                    "id": "portfolio111",
+                    "portfolioId": "portfolio123",
                     "title": "My 2 project",
                     "description": "This project was developed with TS and React.",
                     "link": "https://example.com",
@@ -381,7 +387,9 @@
                       "UX",
                       "UI"
                     ],
-                    "createdAt": "2024-01-31T15:05:32.282Z"
+                    "createdAt": "2024-01-31T15:05:32.282Z",
+                    "userName": "John",
+                    "lastName": "Doe"
                   }
                 ]
               }
@@ -420,7 +428,7 @@
               "application/json": {
                 "example": {
                   "portifolio": {
-                    "id": "portfolio123",
+                    "portfolioId": "portfolio123",
                     "title": "My last project",
                     "description": "This project was developed with TS and React.",
                     "link": "https://example.com",
@@ -429,7 +437,9 @@
                       "UX",
                       "UI"
                     ],
-                    "createdAt": "2024-01-31T15:05:32.282Z"
+                    "createdAt": "2024-01-31T15:05:32.282Z",
+                    "userName": "John",
+                    "lastName": "Doe"
                   }
                 }
               }
