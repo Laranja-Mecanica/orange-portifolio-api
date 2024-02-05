@@ -50,7 +50,7 @@ app.get(
   passport.authenticate('google'),
   (req: Request, res: Response) => {
     res.cookie('token', req.user, { secure: true, httpOnly: true })
-    res.redirect('https://orange-portifolio.vercel.app/')
+    res.redirect(`https://orange-portifolio.vercel.app?token=${req.user}`)
   },
 )
 
