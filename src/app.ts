@@ -49,7 +49,7 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google'),
   (req: Request, res: Response) => {
-    res.cookie('token', req.user, { secure: true, httpOnly: true })
+    res.cookie('token', req.user, { secure: true })
     res.redirect(`https://orange-portifolio.vercel.app?token=${req.user}`)
   },
 )
