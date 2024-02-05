@@ -53,7 +53,8 @@ app.get(
       failureRedirect: 'https://orange-portifolio.vercel.app/',
     },
     (req: Request, res: Response) => {
-      return res.status(200).json({ token: req.user })
+      res.status(200).json({ token: req.user })
+      res.redirect('https://orange-portifolio.vercel.app/')
     },
   ),
 )
