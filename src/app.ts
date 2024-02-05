@@ -1,5 +1,5 @@
 import cors from 'cors'
-import express from 'express'
+import express, { Request, Response } from 'express'
 
 import { editPortifolio } from './http/controllers/portifolios/edit-portifolio-controller'
 import { getPortifolioById } from './http/controllers/portifolios/get-portifolio-by-id-controller'
@@ -17,6 +17,7 @@ import session from 'express-session'
 import passport from 'passport'
 import swaggerUi from 'swagger-ui-express'
 
+import cookieParser from 'cookie-parser'
 import swaggerDoc from '../docs/swagger-api-doc.json'
 import { fetchRecentPortifolios } from './http/controllers/portifolios/fetch-recent-portfolios-controller'
 import { options } from './http/cors/cors.config'
@@ -26,6 +27,7 @@ export const app = express()
 
 app.use(express.json())
 app.use(cors(options))
+app.use(cookieParser())
 
 app.post('/register', register)
 app.post('/session', authenticate)
@@ -33,7 +35,7 @@ app.post('/session', authenticate)
 app.use(
   session({
     secret: env.SESSION_SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
   }),
 )
@@ -47,10 +49,11 @@ app.get(
 
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google', {
-    successRedirect: 'https://orange-portifolio.vercel.app/user',
-    failureRedirect: 'https://orange-portifolio.vercel.app/',
-  }),
+  passport.authenticate('google'),
+  (req: Request, res: Response) => {
+    res.cookie('BANANA', req.user)
+    res.redirect(`https://orange-portifolio.vercel.app?token=${req.user}`)
+  },
 )
 
 app.use(

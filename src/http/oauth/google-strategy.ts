@@ -1,4 +1,5 @@
 import { env } from '@/env'
+import { sign } from 'jsonwebtoken'
 import passport from 'passport'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { getPrisma } from '../prisma/prisma'
@@ -30,12 +31,12 @@ passport.use(
           },
         })
         if (newUser) {
-          done(null, newUser)
+          const token = sign(newUser.id, env.JWT_PVK)
+          done(null, token)
         }
       } else {
-        console.log(user)
-
-        done(null, user)
+        const token = sign(user.id, env.JWT_PVK)
+        done(null, token)
       }
     },
   ),
