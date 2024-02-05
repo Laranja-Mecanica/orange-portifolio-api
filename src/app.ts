@@ -48,10 +48,34 @@ app.get(
 app.get(
   '/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: `/getInfo`,
+    successRedirect: `https://orange-portifolio.vercel.app/`,
     failureRedirect: 'https://orange-portifolio.vercel.app/',
   }),
+  (req: Request, res: Response) => {
+    res.json(req.user)
+  },
 )
+
+// app.get(
+//   '/auth/google/callback',
+//   passport.authenticate('google', { failureRedirect: '/login' }),
+//   (req, res) => {
+//     if (req.user) {
+//       const token = req.user
+
+//       res.cookie('auth_token', token, {
+//         httpOnly: true,
+//         secure: true,
+//         sameSite: 'none',
+//         maxAge: 24 * 60 * 60 * 1000,
+//       })
+
+//       res.redirect(`https://orange-portifolio.vercel.app/home`)
+//     } else {
+//       res.redirect('https://orange-portifolio.vercel.app/')
+//     }
+//   },
+// )
 
 app.use(
   '/docs',
