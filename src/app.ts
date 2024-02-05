@@ -1,5 +1,5 @@
 import cors from 'cors'
-import express from 'express'
+import express, { Request, Response } from 'express'
 
 import { editPortifolio } from './http/controllers/portifolios/edit-portifolio-controller'
 import { getPortifolioById } from './http/controllers/portifolios/get-portifolio-by-id-controller'
@@ -47,10 +47,19 @@ app.get(
 
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google', {
-    failureRedirect: 'https://orange-portifolio.vercel.app/',
-    successRedirect: 'https://orange-portifolio.vercel.app/',
-  }),
+  passport.authenticate(
+    'google',
+    {
+      failureRedirect: 'https://orange-portifolio.vercel.app/',
+    },
+    (req: Request, res: Response) => {
+      res.cookie('token', req.user, {
+        maxAge: 900000,
+        httpOnly: true,
+      })
+      res.redirect('https://orange-portifolio.vercel.app/')
+    },
+  ),
 )
 
 app.use(
@@ -62,10 +71,6 @@ app.use(
     },
   }),
 )
-
-// app.use('/getInfo', (req: Request, res: Response) => {
-//   return res.status(200).json({ token: req.user })
-// })
 
 app.use(authorize)
 
