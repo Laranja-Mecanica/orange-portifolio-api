@@ -1,129 +1,37 @@
-# Documentação da API
+![Langue Laranja](https://github.com/Laranja-Mecanica/orange-portifolio-api/blob/main/docs/em-breve-sangues-laranjas.png)
 
-Bem-vindo à documentação da API. Aqui estão detalhes sobre as rotas disponíveis, seus métodos e requisitos de autenticação, quando aplicável.
+# Orange Portfolio - API
 
-## Rotas de Usuários
+### Olá sangue laranja! 👋
 
-### 1. Registro de Usuário
+Este projeto foi concebido com o intuito de desenvolver um software com um design robusto, escalável e de alta qualidade. A abordagem adotada visou facilitar a compreensão, evolução e manutenção ao longo do tempo.
 
-Registra um novo usuário.
+Utilizamos o Domain-Driven Design (DDD) para criar um design alinhado com o domínio do problema. A Clean Architecture foi aplicada para organizar e estruturar o código de maneira modular e desacoplada.
 
-- **Método:** POST
-- **Endpoint:** `/register`
-- **Requisitos:** Sem autenticação
+Apesar de reconhecermos que houve um certo overengineering, dado que se trata de um MVP, afirmamos que valeu a pena, e por um motivo singular: a partilha de conhecimento!
 
-**Corpo da Solicitação:**
-```json
-{
-  "name": "John",
-  "lastName": "Doe",
-  "email": "johndoe@example.com",
-  "password": "123456"
-}
-```
-### 2. Autenticação de Usuário
+## Princípios e Conceitos
 
-Autentica um usuário existente.
+Durante essa jornada, aplicamos diversos conceitos, incluindo SOLID e Arquitetura Limpa. Inversão de dependências, princípio da responsabilidade única e a utilização de padrões como repositories e factories foram incorporados. Além disso, garantimos a integridade do código por meio de testes unitários e E2E (End-to-end). Enfrentamos desafios, mas superamos todos eles!
 
-- **Método:** `POST`
-- **Endpoint:** `/session`
-- **Requisitos:** Sem autenticação
+## Tecnologias Utilizadas
 
-**Corpo da Solicitação:**
-```json
-{
-  "email": "johndoe@example.com",
-  "password": "123456"
-}
-```
+- Linguagem: TypeScript
+- Ambiente: Node.js
+- Micro-framework web: Express.js
+- Validação de dados: Zod
+- Criptografia e hash de senhas: Bcrypt
+- Autenticação e identificação do usuário: JWT
+- ORM para o banco de dados: Prisma
+- Banco de dados: PostgreSQL
+- Testes: Vitest e Supertest
+- Deploy: Digital Ocean
 
-### 3. Busca de Perfil de Usuário
+## Foco em Boas Práticas e Comunicação
 
-Busca o perfil de um usuário pelo ID.
+Mais do que bibliotecas, frameworks ou linguagem, concentramos nossos esforços em boas práticas e comunicação. Acreditamos que esses elementos são fundamentais para tornar um software saudável e sustentável ao longo do tempo.
 
-- **Método:** `GET`
-- **Endpoint:** `/users/:id`
-- **Requisitos:** Sem autenticação
-
-Essa rota permite a busca do perfil de um usuário específico através do método `GET` no endpoint `/users/:id`. Não é necessário autenticação para acessar essa rota.
-
-O parâmetro `:id` na URL deve ser substituído pelo ID do usuário desejado.
-
-Se precisar de mais informações ou esclarecimentos, sinta-se à vontade para entrar em contato.
-
-### 4. Lista de Portfólios de um Usuário
-
-Lista os portfólios de um usuário pelo ID.
-
-- **Método:** `GET`
-- **Endpoint:** `/users/:id/portfolios`
-- **Requisitos:** Sem autenticação
-
-Essa rota permite a listagem dos portfólios de um usuário específico através do método `GET` no endpoint `/users/:id/portfolios`. Não é necessário autenticação para acessar essa rota.
-
-O parâmetro `:id` na URL deve ser substituído pelo ID do usuário desejado.
-
-Se precisar de mais informações ou esclarecimentos, sinta-se à vontade para entrar em contato.
-
-## Rotas de Portfólios
-
-### 1. Busca de Portfólio por ID
-
-Busca um portfólio pelo ID.
-
-- **Método:** `GET`
-- **Endpoint:** `/portfolios/:id`
-- **Requisitos:** Sem autenticação
-
-### 2. Criação de Portfólio
-
-Cria um novo portfólio.
-
-- **Método:** `POST`
-- **Endpoint:** `/portfolios`
-- **Requisitos:** Autenticado
-
-**Corpo da Solicitação:**
-```json
-{
-  "title": "My last project",
-  "description": "This project was developed in Orange Juice Hackthon.",
-  "link": "https://example.com"
-}
-
-```
-### 3. Edição de Portfólio
-
-Edita um portfólio existente pelo ID.
-
-- **Método:** `PUT`
-- **Endpoint:** `/portfolios/:id`
-- **Requisitos:** Autenticado
-
-**Corpo da Solicitação:**
-```json
-{
-  "title": "Updated title",
-  "description": "Updated description",
-  "link": "updatedlink.com"
-}
-```
-Esta rota permite a edição de um portfólio existente através do método PUT no endpoint /portfolios/:id. A autenticação é necessária para acessar esta rota. O parâmetro :id na URL deve ser substituído pelo ID do portfólio que deseja editar.
-
-Observação: Certifique-se de fornecer as informações atualizadas no corpo da solicitação.
-
-### 4. Exclusão de Portfólio
-
-Exclui um portfólio pelo ID.
-
-- **Método:** `DELETE`
-- **Endpoint:** `/portfolios/:id`
-- **Requisitos:** Autenticado
-
-Esta rota permite a exclusão de um portfólio específico através do método `DELETE` no endpoint `/portfolios/:id`. A autenticação é necessária para acessar esta rota. O parâmetro `:id` na URL deve ser substituído pelo ID do portfólio que deseja excluir.
-
-**Observação:** Esta ação é irreversível.
-
-Se precisar de mais informações ou esclarecimentos, sinta-se à vontade para entrar em contato.
-
-
+## Vale a pena dar uma olhada 👀
+ - [Documentação da API](https://orange-app-2m9ib.ondigitalocean.app/docs)
+ - [Inception do Hackathon](https://github.com/Laranja-Mecanica/orange-portifolio/issues/1)
+ - Veja a evolução do nosso projeto através das [Milestones](https://github.com/Laranja-Mecanica/orange-portifolio-api/milestones?state=closed)
